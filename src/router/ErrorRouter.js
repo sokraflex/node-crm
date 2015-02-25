@@ -8,6 +8,9 @@ exports.setup = function(app) {
 		// respond
 		res.send({status: 'error', errors: ['Ein unbekannter Serverfehler ist passiert.']});
 
+		// write json structure
+		console.log(JSON.stringify(err));
+
 		// write error message to file
 		var text = '';
 		var date = new Date();

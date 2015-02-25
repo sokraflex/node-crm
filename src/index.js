@@ -4,7 +4,8 @@ var bodyParser = require('body-parser'),
 	encryption = require('encryption'),
 	express = require('express'),
 	fs = require('fs'),
-	jade = require('jade');
+	jade = require('jade'),
+	Session = require('./model/Session.js');
 
 // configurate encryption
 encryption.config('SALT_WORK_FACTOR', config.PASSWORD_SALT_WORK_FACTOR);
@@ -23,9 +24,12 @@ app.use("/css", express.static("./template/css"));
 app.use(function(req, res, next) {
 	var send = res.send.bind(res);
 	res.send = function(content) {
-		console.log(content);
 		if (typeof content === 'string') return send(content);
 		if (!content.template) return send(content);
+		if (!content.hasOwnProperty('data')) content.data = {};
+		if (content.status == 'success' && !content.data.hasOwnProperty('status')) content.data.status = 'success';
+		if (req.query.sessionId && !content.data.hasOwnProperty('sessionId')) content.data.sessionId = req.query.sessionId;
+		console.log(content);
 
 		fs.readFile('./template/'+content.template+'.jade', function(err, tpl) {
 			if (err) {
@@ -34,16 +38,33 @@ app.use(function(req, res, next) {
 			}
 
 			var fn = jade.compile(tpl, {filename: './template/'+content.template+'.jade'});
-			var response = fn(content.errors ? content : content.data);
+			var response = fn(content);
 			send(response);
 		});
 	};
 	next();
 });
 
+// handle sessionId field
+app.all('*', function(req, res, callback) {
+	console.log(req.query);
+	console.log(req.body);
+	if (!req.query.sessionId) return callback();
+
+	Session.findOne({_id: req.query.sessionId})
+		.exec(function(err, session) {
+			if (err) return res.send(err);
+
+			res.locals.session = session;
+			callback();
+		});
+});
+
 // add controllers
 [
-	'User'
+	'Department',
+	'User',
+	'Usergroup'
 ].map(function(controllerName) {
 	require('./controller/'+controllerName+'.js').setup(app);
 });

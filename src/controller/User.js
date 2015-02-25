@@ -8,7 +8,6 @@ exports.setup = function(app) {
 	app.get('/UserLogin', function(req, res, jump) {res.send({template: 'UserLogin'})});
 
 	app.post('/UserAdd', function(req, res, jump) {
-		console.log(req.body);
 		if (!req.body.username) return res.send({template: 'UserAdd', status: 'error', errors: ['Du musst einen Benutzernamen wählen!']});
 		if (!req.body.email) return res.send({template: 'UserAdd', status: 'error', errors: ['Du musst eine E-Mail Adresse wählen!']});
 		if (!req.body.password) return res.send({template: 'UserAdd', status: 'error', errors: ['Du musst ein Passwort angeben.']});
@@ -51,7 +50,12 @@ exports.setup = function(app) {
 					if (err) return jump(err);
 					if (!isMatch) return res.send({status: 'error', template: 'UserLogin', errors: ['Die Kombination aus Benutzername und Passwort ist uns nicht bekannt.']});
 
-					res.send({status: 'success', template: 'UserHome', data: {user: user}});
+					var session = new Session({user: user._id});
+					session.save(function(err) {
+						if (err) return jump(err);
+						res.writeHead(302, {'Location': '/UserHome?sessionId='+session._id});
+						res.end();
+					});
 				});
 			});
 	});

@@ -1,0 +1,10 @@
+include ./header.jade
+	include ./errors.jade
+	if status == 'success'
+		p.success Die Benutzergruppe wurde erfolgreich angelegt.
+	h1.headline Benutzergruppe anlegen
+	form(method="POST" action="/UsergroupAdd?sessionId=#{data.sessionId}")
+		div.field
+			label Gruppenname
+			input(type="text" name="name")
+		input(type="submit" value="Anlegen")
