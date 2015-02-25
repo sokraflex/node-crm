@@ -1,0 +1,16 @@
+{
+	"name": "node-crm",
+	"description": "change request manager in node.js with gui",
+	"version": "0.0.1",
+	"scripts": {
+		"start": "node index.js"
+	},
+	"dependencies": {
+		"async": "*",
+		"body-parser": "*",
+		"express": "*",
+		"jade": "*",
+		"mongoose": "*",
+		"https://github.com/SargTeX/node-encryption/archive/current.tar.gz": "*"
+	}
+}

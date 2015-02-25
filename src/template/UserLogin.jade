@@ -1,0 +1,10 @@
+include ./header.jade
+	include ./errors.jade
+	form(method="POST" action="/UserLogin")
+		div.field
+			label Benutzername
+			input(type="text" name="username")
+		div.field
+			label Passwort
+			input(type="password" name="password")
+		input(type="submit" value="Anmelden")
