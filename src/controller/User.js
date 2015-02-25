@@ -9,16 +9,16 @@ exports.setup = function(app) {
 
 	app.post('/UserAdd', function(req, res, jump) {
 		console.log(req.body);
-		if (!req.param('username')) return res.send({template: 'UserAdd', status: 'error', errors: ['Du musst einen Benutzernamen wählen!']});
-		if (!req.param('email')) return res.send({template: 'UserAdd', status: 'error', errors: ['Du musst eine E-Mail Adresse wählen!']});
-		if (!req.param('password')) return res.send({template: 'UserAdd', status: 'error', errors: ['Du musst ein Passwort angeben.']});
-		if (req.param('password').length < config.PASSWORD_MIN_LENGTH) return res.send({template: 'UserAdd', status: 'error', errors: ['Dein Passwort muss mindestens '+config.PASSWORD_MIN_LENGTH+' Zeichen lang sein.']});
+		if (!req.body.username) return res.send({template: 'UserAdd', status: 'error', errors: ['Du musst einen Benutzernamen wählen!']});
+		if (!req.body.email) return res.send({template: 'UserAdd', status: 'error', errors: ['Du musst eine E-Mail Adresse wählen!']});
+		if (!req.body.password) return res.send({template: 'UserAdd', status: 'error', errors: ['Du musst ein Passwort angeben.']});
+		if (req.body.password.length < config.PASSWORD_MIN_LENGTH) return res.send({template: 'UserAdd', status: 'error', errors: ['Dein Passwort muss mindestens '+config.PASSWORD_MIN_LENGTH+' Zeichen lang sein.']});
 		var user = new User({
-			username: req.param('username'),
-			name: req.param('name'),
-			surname: req.param('surname'),
-			email: req.param('email'),
-			password: req.param('password')
+			username: req.body.username,
+			name: req.body.name,
+			surname: req.body.surname,
+			email: req.body.email,
+			password: req.body.password
 		});
 
 		User.findOne({$or: [{username: user.username}, {email: user.email}]})
@@ -42,12 +42,12 @@ exports.setup = function(app) {
 	});
 
 	app.post('/UserLogin', function(req, res, jump) {
-		User.findOne({$or: [{username: req.param('username')}, {email: req.param('username')}]})
+		User.findOne({$or: [{username: req.body.username}, {email: req.body.username}]})
 			.exec(function(err, user) {
 				if (err) return jump(err);
 				if (!user) return res.send({status: 'error', template: 'UserLogin', errors: ['Die Kombination aus Benutzername und Passwort ist uns nicht bekannt.']});
 
-				user.comparePassword(req.param('password'), function(err, isMatch) {
+				user.comparePassword(req.body.password, function(err, isMatch) {
 					if (err) return jump(err);
 					if (!isMatch) return res.send({status: 'error', template: 'UserLogin', errors: ['Die Kombination aus Benutzername und Passwort ist uns nicht bekannt.']});
 
