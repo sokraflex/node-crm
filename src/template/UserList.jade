@@ -1,0 +1,18 @@
+include ./header.jade
+h1 Alle Benutzer (#{data.users.length})
+
+table
+	thead
+		tr
+			th Benutzername
+			th Name
+			th E-Mail
+			th Aktionen
+	tbody
+		each user in data.users
+			tr
+				td #{user.username}
+				td #{user.name} #{user.surname}
+				td #{user.email}
+				td
+					a(href="/UserEdit?sessionId=#{data.sessionId}&userId=#{user._id}") Bearbeiten

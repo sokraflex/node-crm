@@ -12,7 +12,7 @@ form(method="POST" action="/PermissionAdd?sessionId=#{data.sessionId}")
 	input(type="hidden" name="usergroupId" value="#{data.usergroup._id}")
 	input(type="submit" value="Berechtigung gewähren")
 
-h2 Bereits gewährte Berechtigungen
+h2 Bereits gewährte Berechtigungen (#{data.permissions.length})
 table
 	thead
 		tr

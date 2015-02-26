@@ -1,0 +1,30 @@
+include ./header.jade
+h1 Benutzer 
+	i #{data.user.username}
+	span  bearbeiten
+
+include ./errors.jade
+
+if status == 'success'
+	p.success 
+
+form(method="POST" action="/UserEdit?sessionId=#{data.sessionId}")
+	div.field
+		label Benutzername
+		input(type="text" name="username" value="#{data.user.username}")
+	div.field
+		label Vorname
+		input(type="text" name="name" value="#{data.user.name}")
+	div.field
+		label Nachname
+		input(type="text" name="surname" value="#{data.user.surname}")
+	div.field
+		label E-Mail Adresse
+		input(type="text" name="email" value="#{data.user.email}")
+	div.field
+		label Benutzergruppen
+		select(multiple="multiple" name="usergroups")
+			each usergroup in data.usergroups
+				option(value="#{usergroup._id}" selected=data.user.usergroups.indexOf(usergroup._id) >= 0) #{usergroup.name}
+	input(type="hidden" name="userId" value="#{data.user._id}")
+	input(type="submit" value="Aktualisieren")

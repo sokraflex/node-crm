@@ -1,7 +1,8 @@
 var async = require('async'),
 	config = require('../config/config.js'),
 	Session = require('../model/Session.js'),
-	User = require('../model/User.js');
+	User = require('../model/User.js'),
+	Usergroup = require('../model/Usergroup.js');
 
 exports.setup = function(app) {
 	app.get('/UserAdd', function(req, res, jump) {res.send({template: 'UserAdd'});});
@@ -72,4 +73,99 @@ exports.setup = function(app) {
 				});
 			});
 	});
+
+	app.get('/UserList', function(req, res, jump) {
+		if (!res.locals.session) return res.send({status: 'error', template: 'PermissionError', errors: ['Du musst angemeldet sein.']});
+
+		res.locals.session.hasPermission('user.canList', function(err, has) {
+			if (err) return jump(err);
+			if (!has) return res.send({status: 'error', template: 'PermissionError', errors: ['Du besitzt nicht die notwendigen Berechtigungen, um alle Benutzer auflisten zu können.']});
+
+			User.find({})
+				.sort('username')
+				.exec(function(err, users) {
+					if (err) return jump(err);
+
+					res.send({template: 'UserList', data: {users: users}});
+				});
+		});
+	});
+
+	app.get('/UserEdit', function(req, res, jump) {
+		if (!res.locals.session) return res.send({status: 'error', template: 'PermissionError', errors: ['Du musst angemeldet sein.']});
+
+		res.locals.session.hasPermission('user.canEdit', function(err, has) {
+			if (err) return jump(err);
+			if (!has) return res.send({status: 'error', template: 'PermissionError', errors: ['Du besitzt nicht die notwendigen Berechtigungen, um Benutzer bearbeiten zu können.']});
+			var user = null,
+				usergroups = [];
+
+			async.parallel([
+				function(next) {
+					User.findById(req.query.userId)
+						.exec(function(err, item) {
+							if (err) return next(err);
+							user = item;
+							next();
+						});
+				},
+				function(next) {
+					Usergroup.find({})
+						.exec(function(err, items) {
+							if (err) return next(err);
+							usergroups = items;
+							next();
+						});
+				}
+			], function(err) {
+				if (err) return jump(err);
+				if (!user) return res.send({status: 'error', template: 'Error', errors: ['Der Benutzer konnte nicht gefunden werden.']});
+
+				res.send({template: 'UserEdit', data: {user: user, usergroups: usergroups}});
+			});
+		});
+	});
+
+	app.post('/UserEdit', function(req, res, jump) {
+		if (!res.locals.session) return res.send({status: 'error', template: 'PermissionError', errors: ['Du musst angemeldet sein.']});
+
+		res.locals.session.hasPermission('usergroup.canEdit', function(err, has) {
+			if (err) return jump(err);
+			if (!has) return res.send({status: 'error', template: 'PermissionError', errors: ['Du besitzt nicht die notwendigen Berechtigungen, um Benutzer bearbeiten zu können.']});
+
+			var user = null,
+				usergroups = [];
+
+			async.parallel([
+				function(next) {
+					User.findById(req.body.userId)
+						.exec(function(err, item) {
+							if (err) return next(err);
+							if (!item) return res.send({status: 'error', template: 'Error', errors: ['Der Benutzer konnte nicht gefunden werden.']});
+
+							user = item;
+							user.username = req.body.username;
+							user.name = req.body.name;
+							user.surname = req.body.surname;
+							user.email = req.body.email;
+							user.usergroups = req.body.usergroups;
+							user.save(next);
+						});
+				},
+
+				function(next) {
+					Usergroup.find({})
+						.exec(function(err, items) {
+							if (err) return next(err);
+							usergroups = items;
+							next();
+						});
+				}
+			], function(err) {
+				if (err) return jump(err);
+
+				res.send({status: 'success', template: 'UserEdit', data: {user: user, usergroups: usergroups}});
+			});
+		});
+	})
 };
