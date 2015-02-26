@@ -1,10 +1,10 @@
 include ./header.jade
-	include ./errors.jade
-	if status == 'success'
-		p.success Die Abteilung wurde erfolgreich angelegt.
-	h1.headline Abteilung anlegen
-	form(method="POST" action="/DepartmentAdd?sessionId=#{data.sessionId}")
-		div.field
-			label Abteilungsname
-			input(type="text" name="name")
-		input(type="submit" value="Anlegen")
+include ./errors.jade
+if status == 'success'
+	p.success Die Abteilung wurde erfolgreich angelegt.
+h1.headline Abteilung anlegen
+form(method="POST" action="/DepartmentAdd?sessionId=#{data.sessionId}")
+	div.field
+		label Abteilungsname
+		input(type="text" name="name")
+	input(type="submit" value="Anlegen")

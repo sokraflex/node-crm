@@ -1,19 +1,19 @@
 include ./header.jade
-	include ./errors.jade
-	form(method="POST" action="/UserAdd")
-		div.field
-			label Benutzername
-			input(type="text" name="username")
-		div.field
-			label Vorname
-			input(type="text" name="name")
-		div.field
-			label Nachname
-			input(type="text" name="surname")
-		div.field
-			label E-Mail
-			input(type="email" name="email")
-		div.field
-			label Passwort
-			input(type="password" name="password")
-		input(type="submit" value="Anmelden")
+include ./errors.jade
+form(method="POST" action="/UserAdd")
+	div.field
+		label Benutzername
+		input(type="text" name="username")
+	div.field
+		label Vorname
+		input(type="text" name="name")
+	div.field
+		label Nachname
+		input(type="text" name="surname")
+	div.field
+		label E-Mail
+		input(type="email" name="email")
+	div.field
+		label Passwort
+		input(type="password" name="password")
+	input(type="submit" value="Anmelden")

@@ -7,6 +7,15 @@ exports.setup = function(app) {
 	app.get('/UserAdd', function(req, res, jump) {res.send({template: 'UserAdd'});});
 	app.get('/UserLogin', function(req, res, jump) {res.send({template: 'UserLogin'})});
 
+	app.get('/UserLogout', function(req, res, jump) {
+		if (!res.locals.session) return res.send({status: 'success', template: 'UserLogout'});
+		res.locals.session.remove(function(err) {
+			if (err) return jump(err);
+			delete res.locals.session;
+			res.send({status: 'success', template: 'UserLogout'});
+		});
+	});
+
 	app.post('/UserAdd', function(req, res, jump) {
 		if (!req.body.username) return res.send({template: 'UserAdd', status: 'error', errors: ['Du musst einen Benutzernamen wählen!']});
 		if (!req.body.email) return res.send({template: 'UserAdd', status: 'error', errors: ['Du musst eine E-Mail Adresse wählen!']});
@@ -51,8 +60,12 @@ exports.setup = function(app) {
 					if (!isMatch) return res.send({status: 'error', template: 'UserLogin', errors: ['Die Kombination aus Benutzername und Passwort ist uns nicht bekannt.']});
 
 					var session = new Session({user: user._id});
-					session.save(function(err) {
+					async.parallel([
+						function(next) {Session.remove({user: user._id}, next);},
+						function(next) {session.save(next);}
+					], function(err) {
 						if (err) return jump(err);
+
 						res.writeHead(302, {'Location': '/UserHome?sessionId='+session._id});
 						res.end();
 					});

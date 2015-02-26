@@ -1,0 +1,21 @@
+ul.menu
+	if !data || !data.sessionId
+		li
+			a(href="/") Startseite
+		li
+			a(href="/UserLogin") Anmelden
+		li
+			a(href="/UserAdd") Registrieren
+	else
+		li
+			a(href="/UserHome?sessionId=#{data.sessionId}") Startseite
+		li
+			a(href="/UserLogout?sessionId=#{data.sessionId}") Abmelden
+		li
+			a(href="/DepartmentList?sessionId=#{data.sessionId}") Abteilungen
+		li
+			a(href="/LanguageList?sessionId=#{data.sessionId}") Sprachen
+		li
+			a(href="/UserList?sessionId=#{data.sessionId}") Benutzer
+		li
+			a(href="/UsergroupList?sessionId=#{data.sessionId}") Benutzergruppen

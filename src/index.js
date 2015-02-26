@@ -28,7 +28,7 @@ app.use(function(req, res, next) {
 		if (!content.template) return send(content);
 		if (!content.hasOwnProperty('data')) content.data = {};
 		if (content.status == 'success' && !content.data.hasOwnProperty('status')) content.data.status = 'success';
-		if (req.query.sessionId && !content.data.hasOwnProperty('sessionId')) content.data.sessionId = req.query.sessionId;
+		if (req.query.sessionId && res.locals.session && !content.data.hasOwnProperty('sessionId')) content.data.sessionId = req.query.sessionId;
 		console.log(content);
 
 		fs.readFile('./template/'+content.template+'.jade', function(err, tpl) {
@@ -63,6 +63,7 @@ app.all('*', function(req, res, callback) {
 // add controllers
 [
 	'Department',
+	'Home',
 	'User',
 	'Usergroup'
 ].map(function(controllerName) {
