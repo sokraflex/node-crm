@@ -36,6 +36,7 @@ exports.setup = function(app) {
 			if (!has) return res.send({status: 'error', template: 'PermissionError', errors: ['Du besitzt nicht die notwendigen Berechtigungen, um dir alle Abteilungen anzeigen zu lassen.']});
 
 			Department.find({})
+				.sort('name')
 				.exec(function(err, departments) {
 					if (err) return jump(err);
 

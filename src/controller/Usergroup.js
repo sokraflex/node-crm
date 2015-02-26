@@ -38,10 +38,13 @@ exports.setup = function(app) {
 			if (!has) return res.send({status: 'error', template: 'PermissionError', errors: ['Du besitzt nicht die notwendigen Berechtigungen, um alle Benutzergruppen auflisten zu können.']});
 
 			Usergroup.find({})
+				.sort('name')
 				.exec(function(err, usergroups) {
 					if (err) return jump(err);
 
-					res.send({template: 'UsergroupList', data: {usergroups: usergroups}});
+					var response = {template: 'UsergroupList', data: {usergroups: usergroups}};
+					if (req.query.status) response.status = req.query.status;
+					res.send(response);
 				});
 		});
 	});
@@ -105,6 +108,34 @@ exports.setup = function(app) {
 
 						res.send({status: 'success', template: 'UsergroupEdit', data: {usergroup: usergroup}});
 					});
+				});
+		});
+	});
+
+	app.get('/UsergroupDefault', function(req, res, jump) {
+		if (!res.locals.session) return res.send({status: 'error', template: 'PermissionError', errors: ['Du musst angemeldet sein.']});
+
+		res.locals.session.hasPermission('usergroup.canSetDefault', function(err, has) {
+			if (err) return jump(err);
+			if (!has) return res.send({status: 'error', template: 'PermissionError', errors: ['Du besitzt nicht die notwendigen Berechtigungen, um die Standard-Benutzergruppe setzen zu können.']});
+
+			Usergroup.findById(req.query.usergroupId)
+				.exec(function(err, usergroup) {
+					if (err) return jump(err);
+					if (!usergroup) return res.send({status: 'error', template: 'Error', errors: ['Die Benutzergruppe konnte nicht gefunden werden.']});
+
+					Usergroup.update({default: true}, {$set: {default: false}})
+						.exec(function(err) {
+							if (err) return jump(err);
+
+							usergroup.default = true;
+							usergroup.save(function(err) {
+								if (err) return jump(err);
+
+								res.writeHead(302, {'Location': '/UsergroupList?sessionId='+req.query.sessionId+'&status=default.success'});
+								res.end();
+							});
+						});
 				});
 		});
 	});

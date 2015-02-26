@@ -7,12 +7,18 @@ div.button
 table
 	thead
 		tr
-			th Name
+			th(colspan="1") Name
+			th Standard
 			th(colspan="3") Aktionen
 	tbody
 		each usergroup in data.usergroups
 			tr
 				td #{usergroup.name}
+				td.center
+					if !usergroup.default
+						a(href="/UsergroupDefault?sessionId=#{data.sessionId}&usergroupId=#{usergroup._id}") Als Standard setzen
+					else
+						span X
 				td
 					a(href="/PermissionList?sessionId=#{data.sessionId}&usergroupId=#{usergroup._id}") Berechtigungen
 				td

@@ -1,3 +1,6 @@
 /* Formulare */
 div.field {display: block;}
 div.field label {width: 150px; display: inline-block;}
+
+/* Tabellen */
+td.center {text-align: center;}

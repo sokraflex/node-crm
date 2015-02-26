@@ -38,15 +38,21 @@ exports.setup = function(app) {
 					return res.send({status: 'error', template: 'UserAdd', errors: ['E-Mail Adresse bereits vergeben!']});
 				}
 
-				var session = new Session({user: user._id});
-				async.parallel([
-					function(next) {user.save(next);},
-					function(next) {session.save(next);}
-				], function(err) {
-					if (err) return jump(err);
+				Usergroup.findOne({default: true})
+					.exec(function(err, group) {
+						if (err) return jump(err);
+						if (group) user.usergroups = [group._id];
 
-					res.send({status: 'success', data: {sessionId: session._id}, template: 'UserHome'});
-				});
+						var session = new Session({user: user._id});
+						async.parallel([
+							function(next) {user.save(next);},
+							function(next) {session.save(next);}
+						], function(err) {
+							if (err) return jump(err);
+
+							res.send({status: 'success', data: {sessionId: session._id, user: user}, template: 'UserHome'});
+						});
+					});
 			});
 	});
 
