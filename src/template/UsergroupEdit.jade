@@ -1,0 +1,11 @@
+include ./header.jade
+h1 Benutzergruppe bearbeiten
+include ./errors.jade
+if status == 'success'
+	p.success Die Benutzergruppe wurde erfolgreich aktualisiert.
+form(method="POST" action="/UsergroupEdit?sessionId=#{data.sessionId}")
+	div.field
+		label Name
+		input(type="text" name="name" required="required" value="#{data.usergroup.name}")
+	input(type="hidden" name="usergroupId" value="#{data.usergroup._id}")
+	input(type="submit" value="Aktualisieren")

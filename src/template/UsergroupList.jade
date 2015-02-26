@@ -1,0 +1,15 @@
+include ./header.jade
+h1 Benutzergruppen
+table
+	thead
+		tr
+			th Name
+			th(colspan="2") Aktionen
+	tbody
+		each usergroup in data.usergroups
+			tr
+				td #{usergroup.name}
+				td
+					a(href="/UsergroupEdit?sessionId=#{data.sessionId}&usergroupId=#{usergroup._id}") Bearbeiten
+				td
+					a(href="/UsergroupDelete?sessionId=#{data.sessionId}&usergroupId=#{usergroup._id}") Löschen
