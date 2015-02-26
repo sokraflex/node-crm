@@ -1,0 +1,11 @@
+include ./header.jade
+include ./errors.jade
+if status == 'success'
+	p.success Abteilung wurde erfolgreich bearbeitet
+h1 Abteilung bearbeiten
+form(method="POST" action="/DepartmentEdit?sessionId=#{data.sessionId}")
+	div.field
+		label Name
+		input(type="text" name="name" value="#{data.department.name}" required="required")
+	input(type="hidden" name="departmentId" value="#{data.department._id}")
+	input(type="submit" value="Speichern")

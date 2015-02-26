@@ -1,0 +1,20 @@
+include ./header.jade
+
+h1 Abteilungen
+
+div.button
+	a(href="/DepartmentAdd?sessionId=#{data.sessionId}") Neue Abteilung erstellen
+
+table
+	thead
+		tr
+			th Name
+			th(colspan="2") Aktionen
+	tbody
+		each department in data.departments
+			tr
+				td #{department.name}
+				td
+					a(href="/DepartmentEdit?sessionId=#{data.sessionId}&departmentId=#{department._id}") Bearbeiten
+				td
+					a(href="/DepartmentDelete?sessionId=#{data.sessionId}&departmentId=#{department._id}") Löschen
