@@ -1,0 +1,26 @@
+include ./header.jade
+h1 #{data.usergroup.name}-Berechtigungen bearbeiten
+
+if status == 'delete.success'
+	p.success Die Berechtigung wurde erfolgreich entfernt.
+if status == 'add.success'
+	p.success Die Berechtigung wurde erfolgreich gewährt.
+
+h2 Neue Berechtigung gewähren
+form(method="POST" action="/PermissionAdd?sessionId=#{data.sessionId}")
+	input(type="text" name="name" placeholder="Name")
+	input(type="hidden" name="usergroupId" value="#{data.usergroup._id}")
+	input(type="submit" value="Berechtigung gewähren")
+
+h2 Bereits gewährte Berechtigungen
+table
+	thead
+		tr
+			th Name
+			th Aktionen
+	tbody
+		each permission in data.permissions
+			tr
+				td #{permission.name}
+				td
+					a(href="/PermissionDelete?sessionId=#{data.sessionId}&permissionId=#{permission._id}") Entfernen

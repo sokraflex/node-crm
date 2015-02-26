@@ -1,14 +1,20 @@
 include ./header.jade
 h1 Benutzergruppen
+
+div.button
+	a(href="/UsergroupAdd?sessionId=#{data.sessionId}") Neue Gruppe erstellen
+
 table
 	thead
 		tr
 			th Name
-			th(colspan="2") Aktionen
+			th(colspan="3") Aktionen
 	tbody
 		each usergroup in data.usergroups
 			tr
 				td #{usergroup.name}
+				td
+					a(href="/PermissionList?sessionId=#{data.sessionId}&usergroupId=#{usergroup._id}") Berechtigungen
 				td
 					a(href="/UsergroupEdit?sessionId=#{data.sessionId}&usergroupId=#{usergroup._id}") Bearbeiten
 				td

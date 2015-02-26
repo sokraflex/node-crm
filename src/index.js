@@ -64,6 +64,7 @@ app.all('*', function(req, res, callback) {
 [
 	'Department',
 	'Home',
+	'Permission',
 	'User',
 	'Usergroup'
 ].map(function(controllerName) {
