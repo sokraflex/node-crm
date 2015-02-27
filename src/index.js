@@ -62,6 +62,7 @@ app.all('*', function(req, res, callback) {
 
 // add controllers
 [
+	'Customer',
 	'Department',
 	'Home',
 	'Permission',

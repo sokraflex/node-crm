@@ -1,0 +1,23 @@
+include ./header.jade
+
+h1 Mandanten (#{data.customers.length})
+
+if status == 'success.delete'
+	p.success Der Mandant wurde erfolgreich entfernt.
+
+div.button
+	a(href="/CustomerAdd?sessionId=#{data.sessionId}") Mandanten anlegen
+
+table
+	thead
+		tr
+			th Name
+			th(colspan="2") Aktionen
+	tbody
+		each customer in data.customers
+			tr
+				td #{customer.name}
+				td
+					a(href="/CustomerEdit?sessionId=#{data.sessionId}&customerId=#{customer._id}") Bearbeiten
+				td
+					a(href="/CustomerDelete?sessionId=#{data.sessionId}&customerId=#{customer._id}") Löschen

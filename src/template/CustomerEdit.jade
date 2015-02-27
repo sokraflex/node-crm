@@ -1,0 +1,15 @@
+include ./header.jade
+
+h1 "#{data.customer.name}" bearbeiten
+
+include ./errors.jade
+
+if status == 'success'
+	p.success Der Mandant wurde erfolgreich aktualisiert.
+
+form(method="POST" action="/CustomerEdit?sessionId=#{data.sessionId}")
+	div.field
+		label Name
+		input(type="text" name="name" value="#{data.customer.name}")
+	input(type="hidden" name="customerId" value="#{data.customer._id}")
+	input(type="submit" value="Anlegen")

@@ -1,0 +1,14 @@
+include ./header.jade
+
+h1 Mandanten anlegen
+
+include ./errors.jade
+
+if status == 'success'
+	p.success "#{data.customer.name}" wurde erfolgreich zu den Mandanten hinzugefügt.
+
+form(method="POST" action="/CustomerAdd?sessionId=#{data.sessionId}")
+	div.field
+		label Name
+		input(type="text" name="name")
+	input(type="submit" value="Anlegen")
