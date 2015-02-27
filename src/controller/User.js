@@ -1,5 +1,6 @@
 var async = require('async'),
 	config = require('../config/config.js'),
+	Department = require('../model/Department.js'),
 	Session = require('../model/Session.js'),
 	User = require('../model/User.js'),
 	Usergroup = require('../model/Usergroup.js');
@@ -103,7 +104,8 @@ exports.setup = function(app) {
 		res.locals.session.hasPermission('user.canEdit', function(err, has) {
 			if (err) return jump(err);
 			if (!has) return res.send({status: 'error', template: 'PermissionError', errors: ['Du besitzt nicht die notwendigen Berechtigungen, um Benutzer bearbeiten zu können.']});
-			var user = null,
+			var departments = [],
+				user = null,
 				usergroups = [];
 
 			async.parallel([
@@ -122,12 +124,20 @@ exports.setup = function(app) {
 							usergroups = items;
 							next();
 						});
+				},
+				function(next) {
+					Department.find({})
+						.exec(function(err, items) {
+							if (err) return next(err);
+							departments = items;
+							next();
+						});
 				}
 			], function(err) {
 				if (err) return jump(err);
 				if (!user) return res.send({status: 'error', template: 'Error', errors: ['Der Benutzer konnte nicht gefunden werden.']});
 
-				res.send({template: 'UserEdit', data: {user: user, usergroups: usergroups}});
+				res.send({template: 'UserEdit', data: {user: user, usergroups: usergroups, departments: departments}});
 			});
 		});
 	});
@@ -139,7 +149,8 @@ exports.setup = function(app) {
 			if (err) return jump(err);
 			if (!has) return res.send({status: 'error', template: 'PermissionError', errors: ['Du besitzt nicht die notwendigen Berechtigungen, um Benutzer bearbeiten zu können.']});
 
-			var user = null,
+			var departments = [],
+				user = null,
 				usergroups = [];
 
 			async.parallel([
@@ -155,6 +166,7 @@ exports.setup = function(app) {
 							user.surname = req.body.surname;
 							user.email = req.body.email;
 							user.usergroups = req.body.usergroups;
+							user.department = req.body.departmentId;
 							user.save(next);
 						});
 				},
@@ -166,11 +178,20 @@ exports.setup = function(app) {
 							usergroups = items;
 							next();
 						});
+				},
+
+				function(next) {
+					Department.find({})
+						.exec(function(err, items) {
+							if (err) return next(err);
+							departments = items;
+							next();
+						});
 				}
 			], function(err) {
 				if (err) return jump(err);
 
-				res.send({status: 'success', template: 'UserEdit', data: {user: user, usergroups: usergroups}});
+				res.send({status: 'success', template: 'UserEdit', data: {user: user, usergroups: usergroups, departments: departments}});
 			});
 		});
 	})
