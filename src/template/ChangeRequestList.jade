@@ -1,0 +1,27 @@
+include ./header.jade
+
+h1 Change Requests (#{data.requests.length})
+
+if status == 'success.delete'
+	p.success Der Change Request wurde erfolgreich entfernt.
+
+div.button
+	a(href="/ChangeRequestAdd?sessionId=#{data.sessionId}") Neuen CR anlegen
+
+table
+	thead
+		tr
+			th Titel
+			th Mandant
+			th(colspan="3") Aktionen
+	tbody
+		each request in data.requests
+			tr
+				td #{request.title}
+				td #{request.customer.name}
+				td
+					a(href="/ChangeRequestView?sessionId=#{data.sessionId}&requestId=#{request._id}") Ansehen
+				td
+					a(href="/ChangeRequestEdit?sessionId=#{data.sessionId}&requestId=#{request._id}") Bearbeiten
+				td
+					a(href="/ChangeRequestDelete?sessionId=#{data.sessionId}&requestId=#{request._id}") Löschen

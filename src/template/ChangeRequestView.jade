@@ -1,0 +1,6 @@
+include ./header.jade
+
+h1 CR "#{data.request.title}" (#{data.request.customer.name})
+
+p Erstellt am: #{data.request.time.getDate()}.#{data.request.time.getMonth()+1}.#{data.request.time.getFullYear()}
+p Von: #{data.request.creator.name} #{data.request.creator.surname} (#{data.request.creator.username})
