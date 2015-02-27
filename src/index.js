@@ -1,5 +1,4 @@
-var autoIncrement = require('mongoose-auto-increment'),
-	bodyParser = require('body-parser'),
+var bodyParser = require('body-parser'),
 	config = require('./config/config.js'),
 	db = require('mongoose'),
 	encryption = require('encryption'),
@@ -13,7 +12,6 @@ encryption.config('SALT_WORK_FACTOR', config.PASSWORD_SALT_WORK_FACTOR);
 
 // configure database connection
 db.connect('mongodb://'+config.db.IP+':'+config.db.PORT+'/'+config.db.NAME);
-autoIncrement.initialize(db);
 
 // initialise webserver
 var app = express();
@@ -64,7 +62,6 @@ app.all('*', function(req, res, callback) {
 
 // add controllers
 [
-	'ChangeRequest',
 	'Customer',
 	'Department',
 	'Home',
