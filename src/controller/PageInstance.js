@@ -24,7 +24,7 @@ exports.setup = function(app) {
 	});
 
 	app.post('/PageInstanceEdit', function(req, res, jump) {
-		PageInstance.findById(req.query.instanceId)
+		PageInstance.findById(req.body.instanceId)
 			.populate('page')
 			.exec(function(err, instance) {
 				if (err) return jump(err);
