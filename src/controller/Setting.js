@@ -1,8 +1,9 @@
-var Setting = require('../model/Setting.js');
+var async = require('async'),
+	Setting = require('../model/Setting.js');
 
 exports.setup = function(app) {
 	app.get('/SettingEdit', function(req, res, jump) {
-		res.locals.session.hasPermission('session.canEdit', function(err, has) {
+		res.locals.session.hasPermission('setting.canEdit', function(err, has) {
 			if (err) return jump(err);
 			if (!has) return res.send({template: 'PermissionError', errors: ['Sie besitzen nicht die notwendigen Berechtigungen, um Einstellungen bearbeiten zu können.']});
 
@@ -27,7 +28,7 @@ exports.setup = function(app) {
 	});
 
 	app.post('/SettingEdit', function(req, res, jump) {
-		res.locals.session.hasPermission('session.canEdit', function(err, has) {
+		res.locals.session.hasPermission('setting.canEdit', function(err, has) {
 			if (err) return jump(err);
 			if (!has) return res.send({template: 'PermissionError', errors: ['Sie besitzen nicht die notwendigen Berechtigungen, um Einstellungen bearbeiten zu können.']});
 
