@@ -1,6 +1,6 @@
 include ./header.jade
 
-h1 Page #{data.page.name} bearbeiten
+h1 Page #{data.instance.page.name} bearbeiten
 
 include ./errors.jade
 
@@ -8,10 +8,10 @@ if status = 'success'
 	p.success Die Page wurde erfolgreich aktualisiert
 
 form(method="POST" action="/PageInstanceEdit?sessionId=#{data.sessionId}")
-	each value in data.values
-		if value.field.active
-			label #{value.field.label}
-			case value.field.type
+	each field in data.instance.page.fields
+		if true || field.active
+			label #{field.label}
+			case field.type
 				when 'BOOLEAN'
 					select
 						option Ja
@@ -28,12 +28,13 @@ form(method="POST" action="/PageInstanceEdit?sessionId=#{data.sessionId}")
 					input(type='number')
 				when 'SELECT'
 					select
-						each selectable in value.field.selectables
+						each selectable in field.selectables
 							option #{selectable}
 				when 'SELECTMULTI'
 					select(multiple="multiple")
-						each selectable in value.field.selectables
+						each selectable in field.selectables
 							option #{selectable}
 				when 'TEXT'
 					input(type="text")
+	input(type="hidden" name="instanceId" value="#{data.instance._id}")
 	input(type="submit" value="aktualisieren")
