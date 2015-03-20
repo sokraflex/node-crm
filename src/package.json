@@ -10,8 +10,6 @@
 		"body-parser": "*",
 		"express": "*",
 		"jade": "*",
-		"mongoose": "*",
-		"mongoose-auto-increment": "*",
-		"https://github.com/SargTeX/node-encryption/archive/current.tar.gz": "*"
+		"mongoose": "*"
 	}
 }

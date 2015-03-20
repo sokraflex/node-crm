@@ -1,6 +1,6 @@
 module.exports = {
 	db: {
-		IP: '37.120.171.46',
+		IP: 'localhost',
 		PORT: '27017',
 		NAME: 'node-crm'
 	},

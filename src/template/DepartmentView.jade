@@ -1,0 +1,38 @@
+include ./header.jade
+
+h1 Abteilung #{data.department.name}
+
+div.button
+	a(href="/DepartmentEdit?sessionId=#{sessionId}&departmentId=#{data.department._id}") Name ändern
+
+div.button
+	a(href="/ChangeRequestFieldAdd?sessionId=#{sessionId}&departmentId=#{data.department._id}") Feld hinzufügen
+
+h2 Laufzettel-Felder (#{data.department.fields.length})
+table
+	thead
+		tr
+			th Name
+			th Typ
+			th Beschreibung
+			th Auswahl-Möglichkeiten
+	tbody
+		each field, index in data.department.fields
+			tr
+				td #{field.name}
+				if field.type == 'date'
+					td Datum
+				else if field.type == 'department'
+					td Auswahl (Abteilung)
+				else if field.type == 'fileLink'
+					td Datei-Link
+				else if field.type == 'select'
+					td Auswahlfeld
+				else if field.type == 'text'
+					td Freitext
+				td #{field.description}
+				td
+					each option, i in field.selectables
+						if i > 0
+							span ,
+						span #{option}

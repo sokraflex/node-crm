@@ -1,6 +1,15 @@
+p.line {margin-top: 0; margin-bottom: 0;}
+
 /* Formulare */
 div.field {display: block;}
-div.field label {width: 150px; display: inline-block;}
+div.field label {width: 200px; display: inline-block;}
+div.field em {display: block; color: gray;}
 
 /* Tabellen */
 td.center {text-align: center;}
+td.cost {min-width: 100px; text-align: right;}
+
+/* Fehler & Success */
+.error {color: red;}
+.warning {color: #C5AA19;}
+.success {color: green;}

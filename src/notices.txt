@@ -1,0 +1,67 @@
+Notfications
+ - E-Mail-Benachrichtigung, wenn was zu tun
+ 	- CR-Nummer
+ 	- Was?
+
+Abteilungen
+// - Haben E-Mail Adresse
+
+Allgemein
+ - Bearbeiter immer abspeichern
+ - Bearbeitungsdatum immer abspeichern
+
+CR (model done as seen below, controller nothing done)
+// - Eingangsdatum = Erstellungsdatum
+// - Deadline-Datum
+// - Beschreibung
+// - Stellungnahme PPM/Stellungnahme PPM BG => String
+ - KAM => KeyAccountManagement => Schnittstelle IT und Mandant, speichert CR des Mandanten im System ein
+// - Nummer => manuell eintragen
+// - Dateien anhängen
+// - Benachrichtigungszeit - wenn nach X Tagen der Laufzettel noch nicht von der nächsten Abteilung ausgefüllt wurde (nach E-Mail Benachrichtigung), dann benachrichtige vorherigen Bearbeiter
+
+Laufzettel
+ - Datum => Datum der Bearbeitung des Laufzettels
+ - "Empfehlung Operations" und rest voneinader trennen
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Fehlend
+	- Mail-Notifications (Ausgangsserver?)
+	- Fileupload
+	- Empfehlung Operations, Endbearbeitung CR
+	- CR-Timeout global & in days
+	- FTEOps, PTOps, FTEPPM & PTPPM sind Tage, und müssen per Formel in € umgerechnet werden
+	- Filtermöglichkeiten (All CR Sum) per Mandant, per Status, per Auftragsteller, ...
+	- Berechtigungen human-readable
+
+CR Prozess
+	BCB KAM
+		ChangeRequestAdd mit Titel, Mandant, CR-Steller, "Status" (isv 
+		)

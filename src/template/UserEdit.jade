@@ -31,6 +31,6 @@ form(method="POST" action="/UserEdit?sessionId=#{data.sessionId}")
 		select(name="departmentId")
 			option
 			each department in data.departments
-				option(value="#{department._id}" selected=department._id == data.user.department.toString()) #{department.name}
+				option(value="#{department._id}" selected=data.user.department && department._id == data.user.department.toString()) #{department.name}
 	input(type="hidden" name="userId" value="#{data.user._id}")
 	input(type="submit" value="Aktualisieren")

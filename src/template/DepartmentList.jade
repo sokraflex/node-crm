@@ -15,6 +15,6 @@ table
 			tr
 				td #{department.name}
 				td
-					a(href="/DepartmentEdit?sessionId=#{data.sessionId}&departmentId=#{department._id}") Bearbeiten
+					a(href="/DepartmentView?sessionId=#{data.sessionId}&departmentId=#{department._id}") Bearbeiten
 				td
 					a(href="/DepartmentDelete?sessionId=#{data.sessionId}&departmentId=#{department._id}") Löschen

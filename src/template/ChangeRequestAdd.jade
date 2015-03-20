@@ -16,4 +16,30 @@ form(method="POST" action="/ChangeRequestAdd?sessionId=#{data.sessionId}")
 		select(name="customerId" required="required")
 			each customer in data.customers
 				option(value="#{customer._id}") #{customer.name}
+	div.field
+		label CR-Steller
+		select(name="requestedBy" required="required")
+			option(value="bcb") BCB
+			option(value="customer") Mandant
+	div.field
+		label CR-Nummer
+		input(type="text" name="number" required="required")
+	div.field
+		label Kurzbeschreibung
+		textarea(name="description")
+	div.field
+		label Statement PPM
+		textarea(name="statementPPM")
+	div.field
+		label Statement PPM PG/BM
+		textarea(name="statementPG")
+	div.field
+		label Benachrichtigung nach (Stunden)
+		input(type="number" name="notificationTimeout" step="0.01")
+		em Die vorherige Gruppe wird benachrichtigt, sollte die nächste Bearbeitungsgruppe ihre Antwort zum CR nicht innerhalb von X Stunden erstellen.
+	div.field
+		label Erste Abteilung
+		select(name="department" required="required")
+			each department in data.departments
+				option(value="#{department._id}") #{department.name}
 	input(type="submit" value="Anlegen")

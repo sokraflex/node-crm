@@ -1,6 +1,149 @@
 include ./header.jade
 
-h1 CR-#{data.request.number} "#{data.request.title}" (#{data.request.customer.name})
+h1 #{data.request.number} "#{data.request.title}" (#{data.request.customer.name})
 
-p Erstellt am: #{data.request.time.getDate()}.#{data.request.time.getMonth()+1}.#{data.request.time.getFullYear()}
-p Von: #{data.request.creator.name} #{data.request.creator.surname} (#{data.request.creator.username})
+p.line
+	b CR-Nr:
+	span  #{data.request.number}
+p.line
+	b Titel:
+	span  #{data.request.title}
+p.line
+	b Kunde:
+	span  #{data.request.customer.name}
+p.line
+	b Antragssteller:
+	if data.request.requestedBy == 'bcb'
+		span  BCB
+	else
+		span  #{data.request.customer.name}
+p.line
+	b Erstellt am:
+	span  #{data.request.time.getDate()}.#{data.request.time.getMonth()+1}.#{data.request.time.getFullYear()}
+p.line
+	b Von:
+	span  #{data.request.creator.name} #{data.request.creator.surname} (#{data.request.creator.username})
+p.line
+	b Beschreibung:
+	span  #{data.request.description.replace(/\\n/g, '<br>')}
+p.line
+	b Abteilungen:
+	each department in data.request.departments
+		p.line(style="margin-left: 100px") #{department.name}
+p.line
+	b Status:
+	if data.request.status == 'DONE'
+		span.success  Abgeschlossen
+	else
+		span.warning  In Bearbeitung
+		span  (#{data.request.departments[data.request.departments.length-1].name})
+p.line
+	b Angehängte Dateien:
+	if !data.request.files || data.request.files.length == 0
+		span  Keine
+	else
+		span  #{data.request.files.length}
+		each file in data.request.files
+			p.line(style="margin-left: 100px")
+				a(href="/FileView?sessionId=#{sessionId}&fileId=#{file._id}") #{file.name}
+
+form(method="POST" action="/FileAdd?sessionId=#{sessionId}" style="margin-top: 50px" enctype="multipart/form-data")
+	input(type="text" name="name" required="required" placeholder="Dateiname")
+	input(type="file" name="file" required="required" placeholder="Datei")
+	input(type="submit" value="Hinzufügen")
+
+h1 Kosten Gesamt
+
+div.field
+		label Aufwände
+		table.costs
+			thead
+				tr
+					th laufend / p.a.
+					th
+					th einmalig
+					th lft. Jahr
+					th Folgejahr
+			tbody
+				tr
+					td Sachkosten (€)
+					td.cost #{data.sum.ongoing.materials} €
+					td Sachkosten (€)
+					td.cost #{data.sum.onetime.current.materials} €
+					td.cost #{data.sum.onetime.next.materials} €
+				tr
+					td IT Betrieb (Delta zu Ist; €)
+					td.cost #{data.sum.ongoing.it} €
+					td IT-PT
+					td.cost #{data.sum.onetime.current.itPT} €
+					td.cost #{data.sum.onetime.next.itPT} €
+				tr
+					td FTE Ops
+					td.cost #{data.sum.ongoing.fteOps} €
+					td PT Ops
+					td.cost #{data.sum.onetime.current.ptOps} €
+					td.cost #{data.sum.onetime.next.ptOps} €
+				tr
+					td FTE PPM / OvH
+					td.cost #{data.sum.ongoing.ftePPM} €
+					td PT PPM / OvH
+					td.cost #{data.sum.onetime.current.ptPPM} €
+					td.cost #{data.sum.onetime.next.ptPPM} €
+
+each reply in data.replys
+	if reply.status == 'DONE' || reply.status == 'IRRELEVANT'
+		h2.success Bewertung #{reply.department.name}
+	else
+		h2.warning Bewertung #{reply.department.name}
+
+	p.line
+		b Status:
+		if reply.status == 'DONE'
+			span  Abgeschlossen
+		else if reply.status == 'IRRELEVANT'
+			span  Nicht relevant
+		else
+			span  In Bearbeitung
+	p.line
+		b Bearbeiter:
+		each user in reply.user
+			span  #{user.name} #{user.surname}
+	if reply.time
+		p.line
+			b Datum:
+			span  #{reply.time.getDate()}.#{reply.time.getMonth()+1}.#{reply.time.getFullYear()}
+	div.field
+		label Aufwände
+		table.costs
+			thead
+				tr
+					th laufend / p.a.
+					th
+					th einmalig
+					th lft. Jahr
+					th Folgejahr
+			tbody
+				tr
+					td Sachkosten (€)
+					td.cost #{reply.costs.ongoing.materials} €
+					td Sachkosten (€)
+					td.cost #{reply.costs.onetime.current.materials} €
+					td.cost #{reply.costs.onetime.next.materials} €
+				tr
+					td IT Betrieb (Delta zu Ist; €)
+					td.cost #{reply.costs.ongoing.it} €
+					td IT-PT
+					td.cost #{reply.costs.onetime.current.itPT} €
+					td.cost #{reply.costs.onetime.next.itPT} €
+				tr
+					td FTE Ops
+					td.cost #{reply.costs.ongoing.fteOps} €
+					td PT Ops
+					td.cost #{reply.costs.onetime.current.ptOps} €
+					td.cost #{reply.costs.onetime.next.ptOps} €
+				tr
+					td FTE PPM / OvH
+					td.cost #{reply.costs.ongoing.ftePPM} €
+					td PT PPM / OvH
+					td.cost #{reply.costs.onetime.current.ptPPM} €
+					td.cost #{reply.costs.onetime.next.ptPPM} €

@@ -9,6 +9,7 @@ exports.setup = function(app) {
 			if (!has) return res.send({status: 'error', template: 'PermissionError', errors: ['Du besitzt nicht die notwendigen Berechtigungen, um alle Mandanten auflisten zu können.']});
 
 			Customer.find({})
+				.sort('name')
 				.exec(function(err, customers) {
 					if (err) return jump(err);
 

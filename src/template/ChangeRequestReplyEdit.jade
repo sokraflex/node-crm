@@ -1,0 +1,154 @@
+include ./header.jade
+
+h1 Laufzettel Change Request #{data.reply.request.number}
+
+if status == 'success'
+	p.success Der Laufzettel wurde erfolgreich ausgefüllt und abgespeichert.
+
+if data.reply.request.requestedBy == 'bcb'
+	p
+		b CR-Steller:
+		span  BCB<br>
+		b Mandant:
+		span  #{data.reply.request.customer.name}<br>
+		b Eingangsdatum:
+		span  #{data.reply.request.time.getDate()}.#{data.reply.request.time.getMonth()+1}.#{data.reply.request.time.getFullYear()}<br>
+		b CR-Nr:
+		span  #{data.reply.request.number}<br>
+		b Bezeichnung:
+		span  #{data.reply.request.title}<br>
+		b Beschreibung:
+		span  #{data.reply.request.description}
+else
+	p
+		b CR-Steller:
+		span  Mandant<br>
+		b Mandant:
+		span  #{data.reply.request.customer.name}<br>
+		b Eingangsdatum:
+		span  #{data.reply.request.time.getDate()}.#{data.reply.request.time.getMonth()+1}.#{data.reply.request.time.getFullYear()}<br>
+		b CR-Nr:
+		span  #{data.reply.request.number}<br>
+		b Bezeichnung:
+		span  #{data.reply.request.title}<br>
+		b Beschreibung:
+		span  #{data.reply.request.description}
+
+each reply in data.replys
+	h2 Bewertung #{reply.department.name}
+
+	div.field
+		label Aufwände
+		table.costs
+			thead
+				tr
+					th laufend / p.a.
+					th
+					th einmalig
+					th lft. Jahr
+					th Folgejahr
+			tbody
+				tr
+					td Sachkosten (€)
+					td.cost #{reply.costs.ongoing.materials} €
+					td Sachkosten (€)
+					td.cost #{reply.costs.onetime.current.materials} €
+					td.cost #{reply.costs.onetime.next.materials} €
+				tr
+					td IT Betrieb (Delta zu Ist; €)
+					td.cost #{reply.costs.ongoing.it} €
+					td IT-PT
+					td.cost #{reply.costs.onetime.current.itPT} €
+					td.cost #{reply.costs.onetime.next.itPT} €
+				tr
+					td FTE Ops
+					td.cost #{reply.costs.ongoing.fteOps} €
+					td PT Ops
+					td.cost #{reply.costs.onetime.current.ptOps} €
+					td.cost #{reply.costs.onetime.next.ptOps} €
+				tr
+					td FTE PPM / OvH
+					td.cost #{reply.costs.ongoing.ftePPM} €
+					td PT PPM / OvH
+					td.cost #{reply.costs.onetime.current.ptPPM} €
+					td.cost #{reply.costs.onetime.next.ptPPM} €
+
+
+h2 Bewertung #{data.reply.department.name}
+
+form(method="post" action="/ChangeRequestReplyEdit?sessionId=#{sessionId}")
+	div.field
+		label Status
+		select(required="required" name="status")
+			option(value="IRRELEVANT" selected=data.reply.status == 'IRRELEVANT') Irrelevant
+			option(value="INPROGRESS" selected=!data.reply.status || data.reply.status == 'INPROGRESS') In Bearbeitung
+			option(value="DONE" selected=data.reply.status == 'DONE') Abgeschlossen
+	div.field
+		label Nächste Abteilung
+		select(name="department")
+			option(value="") Keine
+			each department in data.departments
+				if !department._id.equals(data.reply.department._id)
+					option(value="#{department._id}") #{department.name}
+	div.field
+		label Aufwände
+		table.costs
+			thead
+				tr
+					th laufend / p.a.
+					th
+					th einmalig
+					th lft. Jahr
+					th Folgejahr
+			tbody
+				tr
+					td Sachkosten (€)
+					td
+						input(type="number" step="0.01" onchange="bcb.updateSum('ongoing')" id="ongoingMaterials" name="ongoingMaterials" value="#{data.reply.costs.ongoing.materials}")
+					td Sachkosten (€)
+					td
+						input(type="number" step="0.01" onchange="bcb.updateSum('onetimeCurrent')" id="onetimeCurrentMaterials" name="onetimeCurrentMaterials" value="#{data.reply.costs.onetime.current.materials}")
+					td
+						input(type="number" step="0.01" onchange="bcb.updateSum('onetimeNext')" id="onetimeNextMaterials" name="onetimeNextMaterials" value="#{data.reply.costs.onetime.next.materials}")
+				tr
+					td IT Betrieb (Delta zu Ist; €)
+					td
+						input(type="number" step="0.01" onchange="bcb.updateSum('ongoing')" id="ongoingIt" name="ongoingIt" value="#{data.reply.costs.ongoing.it}")
+					td IT-PT
+					td
+						input(type="number" step="0.01" onchange="bcb.updateSum('onetimeCurrent')" id="onetimeCurrentItPT" name="onetimeCurrentItPT" value="#{data.reply.costs.onetime.current.itPT}")
+					td
+						input(type="number" step="0.01" onchange="bcb.updateSum('onetimeNext')" id="onetimeNextItPT" name="onetimeNextItPT" value="#{data.reply.costs.onetime.next.itPT}")
+				tr
+					td FTE Ops
+					td
+						input(type="number" step="0.01" onchange="bcb.updateSum('ongoing')" id="ongoingFTEOps" name="ongoingFTEOps" value="#{data.reply.costs.ongoing.fteOps}")
+					td PT Ops
+					td
+						input(type="number" step="0.01" onchange="bcb.updateSum('onetimeCurrent')" id="onetimeCurrentPTOps" name="onetimeCurrentPTOps" value="#{data.reply.costs.onetime.current.ptOps}")
+					td
+						input(type="number" step="0.01" onchange="bcb.updateSum('onetimeNext')" id="onetimeNextPTOps" name="onetimeNextPTOps" value="#{data.reply.costs.onetime.next.ptOps}")
+				tr
+					td FTE PPM / OvH
+					td
+						input(type="number" step="0.01" onchange="bcb.updateSum('ongoing')" id="ongoingFTEPPM" name="ongoingFTEPPM" value="#{data.reply.costs.ongoing.ftePPM}")
+					td PT PPM / OvH
+					td
+						input(type="number" step="0.01" onchange="bcb.updateSum('onetimeCurrent')" id="onetimeCurrentPTPPM" name="onetimeCurrentPTPPM" value="#{data.reply.costs.onetime.current.ptPPM}")
+					td
+						input(type="number" step="0.01" onchange="bcb.updateSum('onetimeNext')" id="onetimeNextPTPPM" name="onetimeNextPTPPM" value="#{data.reply.costs.onetime.next.ptPPM}")
+				tr
+					td Summe FTE (BCB)
+					td#sumOngoing
+					td Summe PT (BCB)
+					td#sumOnetimeCurrent
+					td#sumOnetimeNext
+	input(type="hidden" name="replyId" value="#{data.reply._id}")
+	input(type="submit" value="Aktualisieren")
+
+script(type="text/javascript").
+	document.body.onload = function() {
+		bcb.updateSum('ongoing');
+		bcb.updateSum('onetimeCurrent');
+		bcb.updateSum('onetimeNext');
+	}

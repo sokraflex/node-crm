@@ -1,0 +1,29 @@
+include ./header.jade
+
+h1 Feld für Abteilung #{data.department.name} anlegen
+
+include ./errors.jade
+
+if status == 'success'
+	p.success Das Feld "#{data.field.name}" wurde erfolgreich angelegt.
+
+form(method="POST" action="/ChangeRequestFieldAdd?sessionId=#{sessionId}")
+	div.field
+		label Name
+		input(type="text" name="name" required="required")
+	div.field
+		label Beschreibung
+		textarea(name="description")
+	div.field
+		label Typ
+		select(required="required" name="type" onchange="document.getElementById('selectables').style.display = (this.value == 'select') ? 'block' : 'none';")
+			option(value="department") Abteilung
+			option(value="select") Auswahlliste
+			option(value="fileLink") Datei-Link
+			option(value="date") Datum
+			option(value="text") Freitext
+	div.field#selectables(style="display: none")
+		label Optionen
+		input(type="text" name="selectables" placeholder="Optionen mit Komma trennen")
+	input(type="hidden" name="departmentId" value="#{data.department._id}")
+	input(type="submit" value="Hinzufügen")

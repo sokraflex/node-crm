@@ -1,5 +1,6 @@
 var async = require('async'),
 	config = require('../config/config.js'),
+	ChangeRequestReply = require('../model/ChangeRequestReply.js'),
 	Department = require('../model/Department.js'),
 	Session = require('../model/Session.js'),
 	User = require('../model/User.js'),
@@ -119,6 +120,7 @@ exports.setup = function(app) {
 				},
 				function(next) {
 					Usergroup.find({})
+						.sort('name')
 						.exec(function(err, items) {
 							if (err) return next(err);
 							usergroups = items;
@@ -127,6 +129,7 @@ exports.setup = function(app) {
 				},
 				function(next) {
 					Department.find({})
+						.sort('name')
 						.exec(function(err, items) {
 							if (err) return next(err);
 							departments = items;
@@ -145,7 +148,7 @@ exports.setup = function(app) {
 	app.post('/UserEdit', function(req, res, jump) {
 		if (!res.locals.session) return res.send({status: 'error', template: 'PermissionError', errors: ['Du musst angemeldet sein.']});
 
-		res.locals.session.hasPermission('usergroup.canEdit', function(err, has) {
+		res.locals.session.hasPermission('user.canEdit', function(err, has) {
 			if (err) return jump(err);
 			if (!has) return res.send({status: 'error', template: 'PermissionError', errors: ['Du besitzt nicht die notwendigen Berechtigungen, um Benutzer bearbeiten zu können.']});
 
