@@ -2,6 +2,13 @@ include ./header.jade
 
 h1 Page #{data.instance.page.name} bearbeiten
 
+- var getValue = function(fieldId) {
+- 	for (var i = 0; i < data.instance.values.length; ++i) {
+-		var value = data.instance.values[i];
+-		if (value.field == fieldId) return value.value;
+- 	}
+- }
+
 include ./errors.jade
 
 if status = 'success'
@@ -13,28 +20,28 @@ form(method="POST" action="/PageInstanceEdit?sessionId=#{data.sessionId}")
 			label #{field.label}
 			case field.type
 				when 'BOOLEAN'
-					select
-						option Ja
-						option Nein
+					select(name="#{field._id}")
+						option(selected=getValue(field._id) == 'Ja') Ja
+						option(selected=getValue(field._id) == 'Nein') Nein
 				when 'DATE'
-					input(type="date")
+					input(type="date" name="#{field._id}" value=getValue(field._id))
 				when 'LONGTEXT'
-					textarea
+					textarea #{getValue(field._id)}
 				when 'MAIL'
-					input(type="email")
+					input(type="email" name="#{field._id}" value=getValue(field._id))
 				when 'MONEY'
-					input(type='number' step="0.01" min="0")
+					input(type='number' step="0.01" min="0" name="#{field._id}" value=getValue(field._id))
 				when 'NUMBER'
-					input(type='number')
+					input(type='number' name="#{field._id}" value=getValue(field._id))
 				when 'SELECT'
-					select
+					select(name="#{field._id}" value=getValue(field._id))
 						each selectable in field.selectables
 							option #{selectable}
 				when 'SELECTMULTI'
-					select(multiple="multiple")
+					select(multiple="multiple" name="#{field._id}" value=getValue(field._id))
 						each selectable in field.selectables
 							option #{selectable}
 				when 'TEXT'
-					input(type="text")
+					input(type="text" name="#{field._id}" value=getValue(field._id))
 	input(type="hidden" name="instanceId" value="#{data.instance._id}")
 	input(type="submit" value="aktualisieren")

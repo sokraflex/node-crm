@@ -5,7 +5,6 @@ var async = require('async'),
 
 exports.setup = function(app) {
 	app.get('/ChangeRequestAdd', function(req, res, jump) {
-		console.log(res.locals);
 		res.locals.session.hasPermission('changeRequest.canAdd', function(err, has) {
 			if (err) return jump(err);
 			if (!has) return res.send({template: 'PermissionError', errors: ['Sie besitzen nicht die notwendigen Berechtigungen, um neue Change Requests anlegen zu können.']});

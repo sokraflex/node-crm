@@ -32,14 +32,15 @@ var pages = {
 			'Link': 'TEXT'
 		},
 		mails: {
-			'Neuer CR ({{=it.get("CR-Nr Mdt")}} {{=it.get("Titel")}})': {
+			'Neuer CR ([CR-Nr Mandant] [Titel])': {
 				addressFields: {
 					'Status': {
 						'An PPM': 'martin.bories@megatherium.to'//'fma.coo-ppm-e2e@postbank.de'
 					}
 				}
 			}
-		}
+		},
+		nextPage: 'P1S2'
 	},
 	'P1S2': {
 		department: 'E2E-PM',
@@ -58,7 +59,7 @@ var pages = {
 			'E-Mail Mandant': 'MAIL'
 		},
 		mails: {
-			'CR zur Bearbeitung ({{=it.get("CR-Nr BCB")}})': {
+			'CR zur Bearbeitung ([CR-Nr BCB])': {
 				addressFields: {
 					'Weiter an': {
 						'PPM PV': 'martin.bories@megatherium.to',//'fma.coo-ppm-pv@postbank.de',
@@ -68,7 +69,8 @@ var pages = {
 					_all: ['E-Mail Mandant']
 				}
 			}
-		}
+		},
+		nextPage: 'P2S1'
 	},
 	'P2S1': {
 		headline: {
@@ -88,7 +90,7 @@ var pages = {
 			'Benachrichtigung': 'LONGTEXT'
 		},
 		mails: {
-			'FTE prüfen ({{=it.get("CR-Nr BCB")}})': {
+			'FTE prüfen ([CR-Nr BCB])': {
 				textField: 'Benachrichtigung',
 				addressFields: {
 					'Status': {
@@ -96,11 +98,12 @@ var pages = {
 					}
 				}
 			},
-			'{{=it.get("CR-Nr BCB")}}': {
+			'[CR-Nr BCB]': {
 				textField: 'Benachrichtigung',
 				addressFields: ['Benachrichtigung an']
 			}
-		}
+		},
+		nextPage: 'P3S1'
 	},
 	'P3S1': {
 		department: 'BM',
@@ -116,14 +119,15 @@ var pages = {
 			'Benachrichtigung': 'TEXT'
 		},
 		mails: {
-			'{{=it.get("CR-Nr BCB")}}': {
+			'[CR-Nr BCB]': {
 				textField: 'Benachrichtigung',
 				addressFields: ['Benachrichtigung an']
 			},
-			'CR-Bearbeitung abgeschlossen ({{=it.get("CR-Nr BCB")}})': {
+			'CR-Bearbeitung abgeschlossen ([CR-Nr BCB])': {
 				address: 'martin.bories@megatherium.to'//'fma.coo-ppm-e2e@postbank.de'
 			}
-		}
+		},
+		nextPage: 'P4S1'
 	},
 	'P4S1': {
 		department: 'E2E-PM',
@@ -140,11 +144,11 @@ var pages = {
 			'Benachrichtigung': 'LONGTEXT'
 		},
 		mails: {
-			'{{=it.get("CR-Nr BCB")}}': {
+			'[CR-Nr BCB]': {
 				textField: 'Benachrichtigung',
 				addressFields: ['Benachrichtigung an']
 			},
-			'{{=it.get("Status")}} {{=it.get("CR-Nr BCB")}}': {
+			'[Status] [CR-Nr BCB]': {
 				addressFields: {
 					'Status': {
 						'MC genehmigt': 'martin.bories@megatherium.to',
@@ -153,7 +157,8 @@ var pages = {
 					}
 				}
 			}
-		}
+		},
+		nextPage: 'P5S1'
 	},
 	'P5S1': {
 		department: 'KAM',
@@ -171,7 +176,7 @@ var pages = {
 			'Benachrichtigung': 'LONGTEXT'
 		},
 		mails: {
-			'{{=it.get("CR-Nr BCB")}}': {
+			'[CR-Nr BCB]': {
 				textField: 'Benachrichtigung',
 				addressFields: ['Benachrichtigung an']
 			}
@@ -191,10 +196,17 @@ async.parallel([
 		}, function(err) {
 			if (err) return next(err);
 
+			var pageObjects = {};
+			var keys = Object.keys(pages);
+			for (var i = 0; i < keys.length; ++i) {
+				pageObjects[keys[i]] = new Page();
+			}
+
 			async.eachSeries(Object.keys(pages), function(name, next2) {
-				var page = {obj: new Page(), fields: [], headlines: [], mails: [], name: name};
+				var page = {obj: pageObjects[name], fields: [], headlines: [], mails: [], name: name, nextPage: null};
 				var fields = {};
 				if (pages[name].department) page.department = departments[pages[name].department];
+				if (pages[name].nextPage) page.nextPage = pageObjects[pages[name].nextPage]._id;
 
 				for (var pageName in pages[name].headline) {
 					page.headlines.push(pages[pageName]._id);

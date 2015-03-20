@@ -2,11 +2,11 @@ var nodemailer = require('nodemailer'),
 	smtp = require('nodemailer-smtp-transport');
 
 var transporter = nodemailer.createTransport(smtp({
-	host: "dressiety-de.netcup-mail.de",
+	host: "megatherium-to.netcup-mail.de",
 	port: 587,
 	auth: {
-		user: 'app@dressiety.de',
-		pass: 'WoR4LppWLVAjgX69ueXSwgJKLnmcT8'
+		user: 'app@megatherium.to',
+		pass: 'LQrxxFiUGEWLnIhPKtprKJrih9ybUz'
 	},
 	debug: true
 }));

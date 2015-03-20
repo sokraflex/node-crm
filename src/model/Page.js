@@ -4,6 +4,7 @@ var ObjectId = db.Schema.Types.ObjectId;
 var Page = new db.Schema({
 	department: {type: ObjectId, ref: 'Department', requierd: true},
 	name: {type: String, required: true, index: {unique: true}},
+	nextPage: {type: ObjectId, ref: 'Page'},
 	headlines: [{
 		page: {type: ObjectId, ref: 'Page'},
 		fields: [{type: ObjectId, ref: 'PageField'}]
