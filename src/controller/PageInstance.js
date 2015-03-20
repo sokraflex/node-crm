@@ -10,13 +10,15 @@ exports.setup = function(app) {
 
 			PageInstance.findById(req.query.instanceId)
 				.populate('page')
-				.populate('page.fields')
 				.populate('department')
 				.exec(function(err, instance) {
 					if (err) return jump(err);
 					if (!instance) return res.send({errors: ['Es konnte kein entsprechender Change Request gefunden werden.']});
 
-					res.send({template: 'PageInstanceEdit', data: {instance: instance}});
+					instance.page.populate('fields', function(err) {
+						if (err) return jump(err);
+						res.send({template: 'PageInstanceEdit', data: {instance: instance}});
+					});
 				});
 		});
 	});
