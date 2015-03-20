@@ -16,6 +16,7 @@ if status = 'success'
 
 form(method="POST" action="/PageInstanceEdit?sessionId=#{data.sessionId}")
 	each field in data.instance.page.fields
+<<<<<<< HEAD
 		if true || field.active
 			label #{field.label}
 			case field.type
@@ -43,5 +44,35 @@ form(method="POST" action="/PageInstanceEdit?sessionId=#{data.sessionId}")
 							option #{selectable}
 				when 'TEXT'
 					input(type="text" name="#{field._id}" value=getValue(field._id))
+=======
+		if field.active
+			div.field
+				label #{field.label}
+				case field.type
+					when 'BOOLEAN'
+						select
+							option Ja
+							option Nein
+					when 'DATE'
+						input(type="date")
+					when 'LONGTEXT'
+						textarea
+					when 'MAIL'
+						input(type="email")
+					when 'MONEY'
+						input(type='number' step="0.01" min="0")
+					when 'NUMBER'
+						input(type='number')
+					when 'SELECT'
+						select
+							each selectable in field.selectables
+								option #{selectable}
+					when 'SELECTMULTI'
+						select(multiple="multiple")
+							each selectable in field.selectables
+								option #{selectable}
+					when 'TEXT'
+						input(type="text")
+>>>>>>> origin/master
 	input(type="hidden" name="instanceId" value="#{data.instance._id}")
 	input(type="submit" value="aktualisieren")

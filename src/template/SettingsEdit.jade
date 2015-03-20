@@ -1,0 +1,10 @@
+include ./header.jade
+
+h1 Settings bearbeiten
+
+include ./errors.jade
+
+form(method="POST"  action="/SettingsEdit?sessionId=#{data.sessionId}")
+	div.field
+		label Notification Timeout
+		input(type="datetime-local")
