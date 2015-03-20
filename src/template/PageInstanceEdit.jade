@@ -1,0 +1,39 @@
+include ./header.jade
+
+h1 Page #{data.page.name} bearbeiten
+
+include ./errors.jade
+
+if status = 'success'
+	p.success Die Page wurde erfolgreich aktualisiert
+
+form(method="POST" action="/PageInstanceEdit?sessionId=#{data.sessionId}")
+	each value in data.values
+		if value.field.active
+			label #{value.field.label}
+			case value.field.type
+				when 'BOOLEAN'
+					select
+						option Ja
+						option Nein
+				when 'DATE'
+					input(type="date")
+				when 'LONGTEXT'
+					textarea
+				when 'MAIL'
+					input(type="email")
+				when 'MONEY'
+					input(type='number' step="0.01" min="0")
+				when 'NUMBER'
+					input(type='number')
+				when 'SELECT'
+					select
+						each selectable in value.field.selectables
+							option #{selectable}
+				when 'SELECTMULTI'
+					select(multiple="multiple")
+						each selectable in value.field.selectables
+							option #{selectable}
+				when 'TEXT'
+					input(type="text")
+	input(type="submit" value="aktualisieren")
