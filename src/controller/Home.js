@@ -12,14 +12,26 @@ exports.setup = function(app) {
 	app.get('/UserHome', function(req, res, jump) {
 		if (!res.locals.session.user) return res.send({status: 'error', template: 'PermissionError', error: 'Du musst angemeldet sein.'});
 		
-		res.locals.session.populate('user', function(err) {
+		var canAddChangeRequests = false;
+		async.parallel([
+			function(next) {
+				res.locals.session.populate('user', function(err) {
+					if (err) return next(err);
+
+					res.locals.session.user.populate('department', next);
+				});
+			},
+			function(next) {
+				res.locals.session.hasPermission('changeRequest.canAdd', function(err, has) {
+					if (err) return next(err);
+					canAddChangeRequests = has;
+					next();
+				});
+			}
+		], function(err) {
 			if (err) return jump(err);
 
-			res.locals.session.user.populate('department', function(err) {
-				if (err) return jump(err);
-
-				res.send({template: 'UserHome', data: {user: res.locals.session.user}});
-			});
+			res.send({template: 'UserHome', data: {user: res.locals.session.user, canAddChangeRequests: canAddChangeRequests}});
 		});
 	});
 };

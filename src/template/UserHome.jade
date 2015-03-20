@@ -1,3 +1,6 @@
 include ./header.jade
 p Willkommen, #{data.user.name} #{data.user.surname}!
 
+if data.canAddChangeRequests
+	div.button
+		a(href="/ChangeRequestAdd?sessionId=#{sessionId}") Change Request erstellen

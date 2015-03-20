@@ -1,8 +1,26 @@
-var mail = require('./config/service/mail.js'),
-	template = require('./tools/template.js'),
+var mail = require('../config/service/mail.js'),
+	ass = require('node-asstpl'),
 	PageInstance = require('../model/PageInstance.js');
 
 exports.setup = function(app) {
+	app.get('/PageInstanceEdit', function(req, res, jump) {
+		res.locals.session.hasPermission('pageInstance.canEdit', function(err, has) {
+			if (err) return jump(err);
+			if (!has) return res.send({template: 'PermissionError', errors: ['Sie haben nicht die notwendigen Berechtigungen, um auf diesen Change Request zu antworten.']});
+
+			PageInstance.findById(req.query.instanceId)
+				.populate('page')
+				.populate('page.fields')
+				.populate('department')
+				.exec(function(err, instance) {
+					if (err) return jump(err);
+					if (!instance) return res.send({errors: ['Es konnte kein entsprechender Change Request gefunden werden.']});
+
+					res.send({template: 'PageInstanceEdit', data: {instance: instance}});
+				});
+		});
+	});
+
 	app.post('/PageInstanceEdit', function(req, res, jump) {
 		PageInstance.findById(req.query.instanceId)
 			.populate('page')
@@ -65,7 +83,14 @@ exports.setup = function(app) {
 
 								console.log('about to send mail to');
 								console.log(recipients);
-								next(false);
+								ass.template(mail.title, function(match, callback) {
+									console.log('MATCHED: '+match);
+									callback(false, match);
+								}, function(err, result) {
+									if (err) return jump(err);
+									console.log('RESULT: '+result);
+									next(false);
+								});
 								/*mail.sendMail({
 									from: 'app@dressiety.de',
 									to: recipients

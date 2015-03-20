@@ -1,3 +1,6 @@
+Offene Fragen:
+	- 
+
 Notfications
  - E-Mail-Benachrichtigung, wenn was zu tun
  	- CR-Nummer

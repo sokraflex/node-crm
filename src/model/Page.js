@@ -2,7 +2,7 @@ var db = require('mongoose');
 var ObjectId = db.Schema.Types.ObjectId;
 
 var Page = new db.Schema({
-	department: {type: ObjectId, ref: 'Department'},
+	department: {type: ObjectId, ref: 'Department', requierd: true},
 	name: {type: String, required: true, index: {unique: true}},
 	headlines: [{
 		page: {type: ObjectId, ref: 'Page'},

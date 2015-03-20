@@ -10,6 +10,8 @@
 		"body-parser": "*",
 		"express": "*",
 		"jade": "*",
-		"mongoose": "*"
+		"mongoose": "*",
+		"nodemailer": "~1.3",
+		"nodemailer-smtp-transport": "*"
 	}
 }

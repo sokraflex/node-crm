@@ -1,7 +1,7 @@
 var nodemailer = require('nodemailer'),
 	smtp = require('nodemailer-smtp-transport');
 
-var transporter = nodemailer.transport(smtp({
+var transporter = nodemailer.createTransport(smtp({
 	host: "dressiety-de.netcup-mail.de",
 	port: 587,
 	auth: {

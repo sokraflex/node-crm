@@ -8,6 +8,14 @@ if status == 'success'
 	p.success Das Feld "#{data.field.name}" wurde erfolgreich angelegt.
 
 form(method="POST" action="/ChangeRequestFieldAdd?sessionId=#{sessionId}")
+	each field in data.fields
+		div.field
+			label #{field.label}
+			if field.type == 'BOOLEAN'
+				select(name=field._id)
+					option Ja
+					option Nein
+			else if field.type == 'TEXT'
 	div.field
 		label Name
 		input(type="text" name="name" required="required")

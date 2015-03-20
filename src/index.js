@@ -73,13 +73,14 @@ app.all('*', function(req, res, callback) {
 
 // add controllers
 [
-	'Page',
-	'PageField',
-
+	'ChangeRequest',
 	'Customer',
 	'Department',
 	'File',
 	'Home',
+	'Page',
+	'PageField',
+	'PageInstance',
 	'Permission',
 	'User',
 	'Usergroup'
