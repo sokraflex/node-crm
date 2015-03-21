@@ -4,6 +4,9 @@ h1 Feld zu #{data.page.name} hinzufügen
 
 include ./errors.jade
 
+if status == 'success'
+	p.success Feld hinzugefügt
+
 form(method="POST" action="/PageFieldAdd?sessionId=#{sessionId}")
 	table
 		tr
