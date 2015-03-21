@@ -106,11 +106,12 @@ exports.setup = function(app) {
 											PageField.findOne({label: match})
 												.exec(function(err, field) {
 													if (err) return next2(err);
-													if (!field) return next2(false, field);
+													if (!field) return next2('field not found');
 
 													PageInstance.findOne({'values.field': field._id, request: instance.request})
 														.exec(function(err, instance2) {
 															if (err) return next2(err);
+															if (!instance2) return next2(false, '');
 
 															for (var i = 0; i < instance2.values.length; ++i) {
 																if (instance2.values[i].field.equals(field._id)) {
