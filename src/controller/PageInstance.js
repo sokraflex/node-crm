@@ -100,22 +100,19 @@ exports.setup = function(app) {
 											if (values[condition.field.toString()] == condition.value) recipients.push(condition.address);
 										}
 
-										console.log('about to send mail to');
-										console.log(recipients);
-										console.log(email);
-										ass.template(email.title, function(match, callback) {
+										ass.template(email.title, function(match, next2) {
 											PageField.findOne({label: match})
 												.exec(function(err, field) {
-													if (err) return callback(err);
-													if (!field) return callback(false, field);
+													if (err) return next2(err);
+													if (!field) return next2(false, field);
 
 													PageInstance.findOne({'values.field': field._id, request: instance.request})
 														.exec(function(err, instance2) {
-															if (err) return callback(err);
+															if (err) return next2(err);
 
 															for (var i = 0; i < instance2.values.length; ++i) {
 																if (instance2.values[i].field.equals(field._id)) {
-																	callback(false, instance2.values[i].value);
+																	next2(false, instance2.values[i].value);
 																	break;
 																}
 															}
