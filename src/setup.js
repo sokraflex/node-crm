@@ -86,7 +86,9 @@ var pages = {
 		},
 		fields: {
 			'Status': ['In Bearbeitung', 'Anfrage an PBS', 'Anfrage an Ops', 'Rückfrage an Mandant', 'zur Prüfung an BM', 'Abgeschlossen'],
-			'Aufwand': 'COSTS',
+			'Aufwand PPM PV': {type: 'COSTS', department: 'PPM-PV'},
+			'Aufwand PPM ZV': {type: 'COSTS', department: 'PPM-ZV'},
+			'Aufwand PPM SV': {type: 'COSTS', department: 'PPM-SN'},
 			'Empfehlung Ops': 'BOOLEAN',
 			'Leistbar Ops': 'BOOLEAN',
 			'Name Abteilung': 'TEXT',
@@ -238,6 +240,9 @@ async.parallel([
 						label: fieldName
 					});
 					page.fields.push(field._id);
+
+					if (obj.department) obj.department = departments[obj.department];
+
 					if (Array.isArray(obj)) {
 						field.type = 'SELECT';
 						field.selectables = obj;

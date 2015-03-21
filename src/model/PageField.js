@@ -3,6 +3,7 @@ var ObjectId = db.Schema.Types.ObjectId;
 
 var PageField = new db.Schema({
 	page: {type: ObjectId, ref: 'Page', required: true},
+	department: {type: ObjectId, ref: 'Department'},
 	label: {type: String, required: true},
 	type: {type: String, required: true, enum: [
 		'BOOLEAN', // ja/nein-Auswahlfeld
