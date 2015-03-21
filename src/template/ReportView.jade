@@ -11,5 +11,41 @@ table
 		each row in data.rows
 			tr
 				each value in row
-					td #{value}
+					if typeof value == 'string'
+						td #{value}
+					else
+						td
+							table
+									thead
+										tr
+											th laufend / p.a.
+											th
+											th einmalig
+											th lft. Jahr
+											th Folgejahr
+									tbody
+										tr
+											td Sachkosten (€)
+											td #{value.runningMaterial}
+											td Sachkosten (€)
+											td #{value.currentMaterial}
+											td #{value.nextMaterial}
+										tr
+											td IT Betrieb (Delta zu Ist; €)
+											td #{value.runningIt}
+											td IT-PT
+											td #{value.currentIt}
+											td #{value.nextIt}
+										tr
+											td FTE Ops
+											td #{value.runningOps}
+											td PT Ops
+											td #{value.currentOps}
+											td #{value.nextOps}
+										tr
+											td FTE PPM / OvH
+											td #{value.runningPPM}
+											td PT PPM / OvH
+											td #{value.currentPPM}
+											td #{value.nextPPM}
 			

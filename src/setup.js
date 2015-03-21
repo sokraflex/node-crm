@@ -14,13 +14,14 @@ db.connect('mongodb://'+config.db.IP+':'+config.db.PORT+'/'+config.db.NAME);
 var reports = {
 	'main': {
 		fields: [
-			{page: 'P1S1', fields: 'Status'},
-			{page: 'P1S2', fields: 'Status'},
-			{page: 'P2S1', fields: 'Status'},
-			{page: 'P2S1', fields: ['Aufwand PPM PV', 'Aufwand PPM ZV', 'Aufwand PPM SN'], type: 'added'},
-			{page: 'P3S1', fields: 'Status'},
-			{page: 'P4S1', fields: 'Status'},
-			{page: 'P5S1', fields: 'Status'}
+			{page: 'P1S1', fields: 'Status', label: 'P1S1'},
+			{page: 'P1S1', fields: ['Aufwand', 'Aufwand PPM'], type: 'added', label: 'Aufwände'},
+			{page: 'P1S2', fields: 'Status', label: 'P1S2'},
+			{page: 'P2S1', fields: 'Status', label: 'P2S1'},
+			//{page: 'P2S1', fields: ['Aufwand PPM PV', 'Aufwand PPM ZV', 'Aufwand PPM SN'], type: 'added'},
+			{page: 'P3S1', fields: 'Status', label: 'P3S1'},
+			{page: 'P4S1', fields: 'Status', label: 'P4S1'},
+			{page: 'P5S1', fields: 'Status', label: 'P5S1'}
 		]
 	}
 };
@@ -44,7 +45,8 @@ var pages = {
 			'Status': ['Angelegt', 'Abgewiesen', 'Zurückgezogen', 'Rückfrage an Mandant', 'An PPM'],
 			'Anmerkung KAM': 'LONGTEXT',
 			'Link': 'TEXT',
-			'Aufwand': 'COSTS'
+			'Aufwand': 'COSTS',
+			'Aufwand PPM': 'COSTS'
 		},
 		mails: {
 			'Neuer CR ([CR-Nr Mandant] [Titel])': {
@@ -333,7 +335,11 @@ async.parallel([
 											fields.fields.push(items[i]._id);
 								for (var i = 0; i < items.length; ++i)
 									fields.fields.push(items[i]._id);
-								if (field.type) fields.type = field.type;
+
+								delete field.fields;
+								for (var propertyName in field) {
+									if (field.hasOwnProperty(propertyName)) fields[propertyName] = field[propertyName];
+								}
 								obj.fields.push(fields);
 								next3();
 							});

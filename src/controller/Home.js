@@ -1,4 +1,5 @@
 var async = require('async'),
+	calendar = require('../tool/calendar.js'),
 	ChangeRequestReply = require('../model/ChangeRequestReply.js'),
 	Page = require('../model/Page.js'),
 	PageInstance = require('../model/PageInstance.js'),
@@ -16,20 +17,9 @@ exports.setup = function(app) {
 		
 		var canAddChangeRequests = false,
 			count = {},
-			day = new Date().getDay(),
 			days = req.query.days ? parseInt(req.query.days) : 5,
-			pages = [],
-			totalDays = req.query.days ? parseInt(req.query.days) : 5;
-
-		--day;
-		for (var i = day; days > 0; --i) {
-			if (i < 0) i = 6;
-			if (i == 6 || i == 0) {
-				++days;
-				++totalDays;
-			}
-			--days;
-		}
+			pages = [];
+		var totalDays = calendar.workToFullDays(days);
 
 		var timeout = Date.now()-totalDays * 1000 * 60 * 60 * 24; 
 

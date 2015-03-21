@@ -15,3 +15,9 @@ Todo:
 		- Formular in eine Zeile, ohne fette Ränder dazwischen
 	- Tabellen: Ränder (Excel-Look?)
 	- Berechtigungen: Namen human-readable machen
+	- headlines darstellen!
+	- PageList: Tabellenstyle - nur headline fett, department darstellen
+	- ReportView
+		- Kostentabelle mit Rändern (Excel-Stil, d.h. keine doppelten Ränder wie in HTML normalerweise)
+		- Titel: "Bericht"
+		- Zeilen der Haupt-Tabelle trennen

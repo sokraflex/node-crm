@@ -4,6 +4,7 @@ var ObjectId = db.Schema.Types.ObjectId;
 var Report = new db.Schema({
 	name: {type: String, index: {unique: true}},
 	fields: [{
+		label: {type: String, required: true},
 		fields: [{type: ObjectId, ref: 'PageField'}],
 		type: {type: String, enum: ['added', 'normal'], required: true, default: 'normal'}
 	}],
