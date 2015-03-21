@@ -4,3 +4,24 @@ p Willkommen, #{data.user.name} #{data.user.surname}!
 if data.canAddChangeRequests
 	div.button
 		a(href="/ChangeRequestAdd?sessionId=#{sessionId}") Change Request erstellen
+- console.log(data.count);
+p #{JSON.stringify(data.count)}
+
+table
+	tr
+		th Seitenname
+		th Gesamt
+		th Zustände
+	each page, numbers in data.count
+		tr
+			th page
+			th numbers._total
+			if numbers.stati.length > 0
+					table
+						tr
+							th Zustand
+							th Anzahl
+						each status, num in numbers.stati
+							tr
+								th status
+								th num
