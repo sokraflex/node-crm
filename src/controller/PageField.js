@@ -1,4 +1,5 @@
-var Page = require('../model/Page.js'),
+var async = require('async'),
+	Page = require('../model/Page.js'),
 	PageField = require('../model/PageField.js');
 
 exports.setup = function(app) {
