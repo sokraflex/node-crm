@@ -40,7 +40,7 @@ exports.setup = function(app) {
 						.populate('nextPage', function(err) {
 						if (err) return jump(err);
 
-						if (!instance.values) instance.values = [];
+						instance.values = [];
 						var values = {};
 						for (var i = 0; i < instance.page.fields.length; ++i) {
 							var field = instance.page.fields[i];
