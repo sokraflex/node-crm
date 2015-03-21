@@ -40,7 +40,10 @@ var pages = {
 				}
 			}
 		},
-		nextPage: 'P1S2'
+		nextPage: 'P1S2',
+		finished: {
+			'Status': 'An PPM'
+		}
 	},
 	'P1S2': {
 		department: 'E2E-PM',
@@ -56,7 +59,8 @@ var pages = {
 				type: 'SELECTMULTI',
 				selectables: ['KAM', 'PPM E2E', 'PPM PV', 'PPM ZV', 'PPM SN']
 			},
-			'E-Mail Mandant': 'MAIL'
+			'E-Mail Mandant': 'MAIL',
+			'E-Mail Sonstige': 'MAIL'
 		},
 		mails: {
 			'CR zur Bearbeitung ([CR-Nr BCB])': {
@@ -66,11 +70,14 @@ var pages = {
 						'PPM ZV': 'martin.bories@megatherium.to',//'fma.coo-ppm-zv@postbank.de',
 						'PPM SN': 'martin.bories@megatherium.to'//'fma.coo-ppm-sn@postbank.de'
 					},
-					_all: ['E-Mail Mandant']
+					_all: ['E-Mail Mandant', 'E-Mail Sonstige']
 				}
 			}
 		},
-		nextPage: 'P2S1'
+		nextPage: 'P2S1',
+		finished: {
+			'Weiter an': ['PPM PV', 'PPM ZV', 'PPM SN']
+		}
 	},
 	'P2S1': {
 		headline: {
@@ -103,7 +110,10 @@ var pages = {
 				addressFields: ['Benachrichtigung an']
 			}
 		},
-		nextPage: 'P3S1'
+		nextPage: 'P3S1',
+		finished: {
+			'Status': 'Abgeschlossen'
+		}
 	},
 	'P3S1': {
 		department: 'BM',
@@ -127,7 +137,10 @@ var pages = {
 				address: 'martin.bories@megatherium.to'//'fma.coo-ppm-e2e@postbank.de'
 			}
 		},
-		nextPage: 'P4S1'
+		nextPage: 'P4S1',
+		finished: {
+			'Status': 'Abgeschlossen'
+		}
 	},
 	'P4S1': {
 		department: 'E2E-PM',
@@ -158,7 +171,10 @@ var pages = {
 				}
 			}
 		},
-		nextPage: 'P5S1'
+		nextPage: 'P5S1',
+		finished: {
+			'Status': ['MC genehmigt', 'COO-SB genehmigt', 'COO-SB/MC nicht erforderlich']
+		}
 	},
 	'P5S1': {
 		department: 'KAM',
@@ -180,6 +196,9 @@ var pages = {
 				textField: 'Benachrichtigung',
 				addressFields: ['Benachrichtigung an']
 			}
+		},
+		finished: {
+			'Status': 'CR umgesetzt'
 		}
 	}
 };
@@ -203,7 +222,7 @@ async.parallel([
 			}
 
 			async.eachSeries(Object.keys(pages), function(name, next2) {
-				var page = {obj: pageObjects[name], fields: [], headlines: [], mails: [], name: name, nextPage: null};
+				var page = {obj: pageObjects[name], fields: [], headlines: [], mails: [], name: name, nextPage: null, finishConditions: []};
 				var fields = {};
 				if (pages[name].department) page.department = departments[pages[name].department];
 				if (pages[name].nextPage) page.nextPage = pageObjects[pages[name].nextPage]._id;
@@ -232,6 +251,13 @@ async.parallel([
 					field.save(next3);
 				}, function(err) {
 					if (err) return next2(err);
+
+					for (var fieldName in pages[name].finished) {
+						page.finishConditions.push({
+							field: fields[fieldName],
+							values: Array.isArray(pages[name].finished[fieldName]) ? pages[name].finished[fieldName] : [pages[name].finished[fieldName]]
+						});
+					}
 					
 					for (var title in pages[name].mails) {
 						var obj = pages[name].mails[title];

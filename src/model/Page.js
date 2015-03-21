@@ -19,6 +19,10 @@ var Page = new db.Schema({
 			value: {type: String},
 			address: {type: String}
 		}]
+	}],
+	finishConditions: [{
+		field: {type: ObjectId, ref: 'PageField', required: true},
+		values: [{type: String}]
 	}]
 });
 

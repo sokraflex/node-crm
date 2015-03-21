@@ -19,7 +19,9 @@ exports.setup = function(app) {
 					var instance = new PageInstance({
 						request: request._id,
 						page: page._id,
-						department: page.department
+						department: page.department,
+						editedAt: [Date.now()],
+						editors: [res.locals.session.user]
 					});
 					request.instances.push(instance._id);
 					async.parallel([

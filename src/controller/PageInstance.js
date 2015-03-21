@@ -48,6 +48,17 @@ exports.setup = function(app) {
 							instance.values.push(result);
 							values[field._id] = req.body[field._id];
 						}
+						instance.finished = false;
+						for (var i = 0; i < instance.page.finishConditions.length; ++i) {
+							var condition = instance.page.finishConditions[i];
+							for (var j = 0; j < condition.values.length; ++j) {
+								if (values[condition.field] == condition.values[j]) {
+									instance.finished = true;
+									break;
+								}
+							}
+						}
+
 						instance.editors.push(res.locals.session.user);
 						instance.editedAt.push(Date.now());
 						instance.save(function(err) {
@@ -126,11 +137,14 @@ exports.setup = function(app) {
 
 								function(next) {
 									if (!instance.page.nextPage) return next();
+									if (!finished) return next();
 
 									var nextPage = new PageInstance({
 										page: instance.page.nextPage._id,
 										request: instance.request,
-										department: instance.page.nextPage.department
+										department: instance.page.nextPage.department,
+										editedAt: [Date.now()],
+										editors: [res.locals.session.user]
 									});
 									nextPage.save(next);
 								}
