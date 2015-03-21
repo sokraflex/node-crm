@@ -16,7 +16,23 @@ exports.setup = function(app) {
 		
 		var canAddChangeRequests = false,
 			count = {},
-			pages = [];
+			day = new Date().getDay(),
+			days = req.query.days ? parseInt(req.query.days) : 5,
+			pages = [],
+			totalDays = req.query.days ? parseInt(req.query.days) : 5;
+
+		--day;
+		for (var i = day; days > 0; --i) {
+			if (i < 0) i = 6;
+			if (i == 6 || i == 0) {
+				++days;
+				++totalDays;
+			}
+			--days;
+		}
+
+		var timeout = Date.now()-totalDays * 1000 * 60 * 60 * 24; 
+
 		async.parallel([
 			function(next) {
 				res.locals.session.populate('user', function(err) {
@@ -42,7 +58,7 @@ exports.setup = function(app) {
 														break;
 													}
 
-												PageInstance.find({page: page._id})
+												PageInstance.find({page: page._id, editedAt: {$gt: timeout}})
 													.exec(function(err, instances) {
 														if (err) return next4(err);
 
@@ -51,7 +67,6 @@ exports.setup = function(app) {
 															for (var i = 0; i < instance.values.length; ++i) {
 																var value = instance.values[i];
 																if (!value.field.equals(statusFieldId)) continue;
-																console.log('Status='+value.value);
 																if (!count[page._id].hasOwnProperty(value.value)) count[page._id][value.value] = 1;
 																else ++count[page._id][value.value];
 																break;
