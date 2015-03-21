@@ -1,36 +1,51 @@
 include ./header.jade
 
-h1 Page #{data.page.name} Felder
+h1 Feld #{data.field.label} editieren
 
 include ./errors.jade
 
 if status = 'success'
 	p.success Die Page wurde erfolgreich aktualisiert
 
-table
-	tr
-		th Feldlabel
-		th Feldtyp
-		th Auswahlliste
-		th Aktiv
-	tr
-		th
-			input(type="text")
-		th
-			select
-				option 'BOOLEAN'
-				option 'COSTS'
-				option 'DATE'
-				option 'LONGTEXT'
-				option 'MAIL'
-				option 'MONEY'
-				option 'NUMBER'
-				option 'SELECT'
-				option 'SELECTMULTI'
-				option 'TEXT'
-		th
-			input(type="text")
-		th
-			input(type="radio" checked="#{data.field.active}")
+- var check = function(type) { return type == data.field.type; }
+
+- var selectableToString = function(selectables) {
+-   var str = '';
+-	for(var i = 0; i < selectables.length; ++i) {
+-		str += selectables[i];
+-		if( i < selectables.length-1) str += ', '	
+-	}
+-   return str;
+- }
+
+form(method="POST" action="/PageFieldEdit?sessionId=#{sessionId}")
+	table
+		tr
+			th Feldlabel
+			th Feldtyp
+			th Auswahlliste
+			th Aktiv
+		tr
+			th
+				input(type="text" value="#{data.field.label}")
+			th
+				select
+					option( selected=check('BOOLEAN') ? '' : undefined) 'BOOLEAN'
+					option( selected=check('COSTS') ? '' : undefined) 'COSTS'
+					option( selected=check('DATE') ? '' : undefined) 'DATE'
+					option( selected=check('LONGTEXT') ? '' : undefined) 'LONGTEXT'
+					option( selected=check('MAIL') ? '' : undefined) 'MAIL'
+					option( selected=check('MONEY') ? '' : undefined) 'MONEY'
+					option( selected=check('NUMBER') ? '' : undefined) 'NUMBER'
+					option( selected=check('SELECT') ? '' : undefined) 'SELECT'
+					option( selected=check('SELECTMULTI') ? '' : undefined) 'SELECTMULTI'
+					option( selected=check('TEXT') ? '' : undefined) 'TEXT'
+			th
+				if data.field.type == 'SELECT' || data.field.type == 'SELECTMULTI'
+					input(type="text" value=selectableToString(data.field.selectables))
+			th
+				input(type="radio" checked=data.field.active ? '' : undefined)
+	input(type="hidden" name="fieldId" value="#{data.field._id}")
+	input(type="submit" value="aktualisieren")
 
 
