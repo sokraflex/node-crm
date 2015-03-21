@@ -47,6 +47,23 @@ exports.setup = function(app) {
 						for (var i = 0; i < instance.page.fields.length; ++i) {
 							var field = instance.page.fields[i];
 							var result = {field: field._id, value: req.body[field._id.toString()]};
+							if (field.type == 'COSTS') {
+								var value = {
+									runningMaterial: req.body[field._id+'-runningMaterial'],
+									currentMaterial: req.body[field._id+'-currentMaterial'],
+									nextMaterial: req.body[field._id+'-nextMaterial'],
+									runningIt: req.body[field._id+'-runningIt'],
+									currentIt: req.body[field._id+'-currentIt'],
+									nextIt: req.body[field._id+'-nextIt'],
+									runningOps: req.body[field._id+'-runningOps'],
+									currentOps: req.body[field._id+'-currentOps'],
+									nextOps: req.body[field._id+'-nextOps'],
+									runningPPM: req.body[field._id+'-runningPPM'],
+									currentPPM: req.body[field._id+'-currentPPM'],
+									nextPPM: req.body[field._id+'-nextPPM']
+								};
+								result.value = JSON.stringify(value);
+							}
 							if (!result.value && field.default) result.value = field.default;
 							instance.values.push(result);
 							values[field._id] = req.body[field._id];

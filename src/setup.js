@@ -43,7 +43,8 @@ var pages = {
 			'Regulatorisch': 'BOOLEAN',
 			'Status': ['Angelegt', 'Abgewiesen', 'Zurückgezogen', 'Rückfrage an Mandant', 'An PPM'],
 			'Anmerkung KAM': 'LONGTEXT',
-			'Link': 'TEXT'
+			'Link': 'TEXT',
+			'Aufwand': 'COSTS'
 		},
 		mails: {
 			'Neuer CR ([CR-Nr Mandant] [Titel])': {
