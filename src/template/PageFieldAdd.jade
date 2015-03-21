@@ -1,0 +1,34 @@
+include ./header.jade
+
+h1 Feld zu #{data.page.name} hinzufügen
+
+include ./errors.jade
+
+form(method="POST" action="/PageFieldAdd?sessionId=#{sessionId}")
+	table
+		tr
+			th Feldlabel
+			th Feldtyp
+			th Auswahlliste
+			th Aktiv
+		tr
+			th
+				input(type="text")
+			th
+				select
+					option 'BOOLEAN'
+					option 'COSTS'
+					option 'DATE'
+					option 'LONGTEXT'
+					option 'MAIL'
+					option 'MONEY'
+					option 'NUMBER'
+					option 'SELECT'
+					option 'SELECTMULTI'
+					option 'TEXT'
+			th
+				input(type="text")
+			th
+				input(type="radio" checked="true")
+	//input(type="hidden" name="fieldId" value="#{data.field._id}")
+	input(type="submit" value="Hinzufügen")

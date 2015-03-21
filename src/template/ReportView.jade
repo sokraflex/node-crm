@@ -1,0 +1,15 @@
+include ./header.jade
+include ./errors.jade
+h1 Tabelle
+
+table
+	thead
+		tr
+			each column in data.columns
+				th #{column}
+	tbody
+		each row in data.rows
+			tr
+				each value in row
+					td #{value}
+			

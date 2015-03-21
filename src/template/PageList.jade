@@ -13,5 +13,7 @@ table
 		tr
 			th
 				a(href="/PageFieldList?sessionId=#{sessionId}&pageId=#{page._id}") #{page.name}
-			th #{page.department.name}
+			th
+				if page.department != undefined 
+					#{page.department.name}
 			th #{page.fields.length}
