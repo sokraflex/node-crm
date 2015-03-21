@@ -4,24 +4,32 @@ p Willkommen, #{data.user.name} #{data.user.surname}!
 if data.canAddChangeRequests
 	div.button
 		a(href="/ChangeRequestAdd?sessionId=#{sessionId}") Change Request erstellen
-- console.log(data.count);
-p #{JSON.stringify(data.count)}
+
+form(method="GET" action="/UserHome")
+	p die letzten 
+	select(name="days")
+		option(value="5") 5 Tage
+		option(value="10") 10 Tage
+	p anzeigen
+	input(type="hidden" name="sessionId" value="#{sessionId}")
+	input(type="submit" value="Aktualisieren")
 
 table
 	tr
 		th Seitenname
 		th Gesamt
 		th Zustände
-	each page, numbers in data.count
+	each obj, page in data.count
 		tr
-			th page
-			th numbers._total
-			if numbers.stati.length > 0
+			th #{page}
+			th #{obj._total}
+			if Object.keys(obj.stati).length > 0
+				th
 					table
 						tr
 							th Zustand
 							th Anzahl
-						each status, num in numbers.stati
+						each num, status in obj.stati
 							tr
-								th status
-								th num
+								th #{status}
+								th #{num}
