@@ -17,6 +17,7 @@ var PageField = new db.Schema({
 		'SELECTMULTI', // auswahlliste mit mehrfachauswahl
 		'TEXT'
 	]},
+	default: {type: String, default: ''},
 	selectables: [{type: String}],
 	active: {type: Boolean, required: true, default: true} // dont delete pagefields!
 });

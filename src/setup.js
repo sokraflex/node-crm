@@ -102,7 +102,7 @@ var pages = {
 			'Status': ['In Bearbeitung', 'Anfrage an PBS', 'Anfrage an Ops', 'Rückfrage an Mandant', 'zur Prüfung an BM', 'Abgeschlossen'],
 			'Aufwand PPM PV': {type: 'COSTS', department: 'PPM-PV'},
 			'Aufwand PPM ZV': {type: 'COSTS', department: 'PPM-ZV'},
-			'Aufwand PPM SV': {type: 'COSTS', department: 'PPM-SN'},
+			'Aufwand PPM SN': {type: 'COSTS', department: 'PPM-SN'},
 			'Empfehlung Ops': 'BOOLEAN',
 			'Leistbar Ops': 'BOOLEAN',
 			'Name Abteilung': 'TEXT',
@@ -265,6 +265,7 @@ async.parallel([
 						for (var propertyName in obj)
 							if (obj.hasOwnProperty(propertyName)) field[propertyName] = obj[propertyName];
 					}
+					if (field.selectables && field.selectables.length > 0) field.default = field.selectables[field.selectables.length-1];
 
 					fields[fieldName] = field._id;
 					field.save(next3);
@@ -318,13 +319,17 @@ async.parallel([
 						fields: []
 					});
 
-					async.each(report.fields, function(field, next3) {
+					async.eachSeries(report.fields, function(field, next3) {
 						if (!Array.isArray(field.fields)) field.fields = [field.fields];
 						PageField.find({page: pages[field.page]._id, label: {$in: field.fields}})
 							.exec(function(err, items) {
 								if (err) return next3(err);
 								
 								var fields = {fields: []};
+								for (var i = 0; i < field.fields.length; ++i)
+									for (var j = 0; j < items.length; ++j)
+										if (items[j]._id == field.fields[i])
+											fields.fields.push(items[i]._id);
 								for (var i = 0; i < items.length; ++i)
 									fields.fields.push(items[i]._id);
 								if (field.type) fields.type = field.type;

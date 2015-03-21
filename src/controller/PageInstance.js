@@ -47,6 +47,7 @@ exports.setup = function(app) {
 						for (var i = 0; i < instance.page.fields.length; ++i) {
 							var field = instance.page.fields[i];
 							var result = {field: field._id, value: req.body[field._id.toString()]};
+							if (!result.value && field.default) result.value = field.default;
 							instance.values.push(result);
 							values[field._id] = req.body[field._id];
 						}

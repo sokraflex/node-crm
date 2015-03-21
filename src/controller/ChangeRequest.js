@@ -11,6 +11,7 @@ exports.setup = function(app) {
 
 			var request = new ChangeRequest({instances: []});
 			Page.findOne({})
+				.populate('fields')
 				.sort('name')
 				.exec(function(err, page) {
 					if (err) return jump(err);
@@ -21,8 +22,17 @@ exports.setup = function(app) {
 						page: page._id,
 						department: page.department,
 						editedAt: [Date.now()],
-						editors: [res.locals.session.user]
+						editors: [res.locals.session.user],
+						values: []
 					});
+					for (var i = 0; i < page.fields.length; ++i) {
+						var field = page.fields[i];
+						if (field.default) {
+							instance.values.push({field: field._id, value: field.default});
+							console.log(field);
+						}
+					}
+					console.log(instance.values);
 					request.instances.push(instance._id);
 					async.parallel([
 						function(next) {instance.save(next);},
