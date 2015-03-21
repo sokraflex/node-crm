@@ -27,5 +27,6 @@ table
 				a(href="/PageFieldEdit?sessionId=#{sessionId}&fieldId=#{field._id}") Editieren
 			th
 				input(type="radio" checked="#{field.active}" readonly)
+	button(onclick="location.href='/PageFieldAdd?sessionId=#{sessionId}&pageId=#{data.page._id}'") Feld hinzufügen
 
 
