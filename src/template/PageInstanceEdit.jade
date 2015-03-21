@@ -11,37 +11,43 @@ h1 Page #{data.instance.page.name} bearbeiten
 
 include ./errors.jade
 
-if status = 'success'
+if status == 'success'
 	p.success Die Page wurde erfolgreich aktualisiert
 
+p zuletzt bearbeitet von #{data.instance.editors[data.instance.editors.length-1].name} #{data.instance.editors[data.instance.editors.length-1].surname} am #{data.instance.editedAt[data.instance.editedAt.length-1]}
+
 form(method="POST" action="/PageInstanceEdit?sessionId=#{data.sessionId}")
-	each field in data.instance.page.fields
-		if field.active
-			label #{field.label}
-			case field.type
-				when 'BOOLEAN'
-					select(name="#{field._id}")
-						option(selected=getValue(field._id) == 'Ja' ? '' : undefined) Ja
-						option(selected=getValue(field._id) == 'Nein' ? '' : undefined) Nein
-				when 'DATE'
-					input(type="date" name="#{field._id}" value=getValue(field._id))
-				when 'LONGTEXT'
-					textarea #{getValue(field._id)}
-				when 'MAIL'
-					input(type="email" name="#{field._id}" value=getValue(field._id))
-				when 'MONEY'
-					input(type='number' step="0.01" min="0" name="#{field._id}" value=getValue(field._id))
-				when 'NUMBER'
-					input(type='number' name="#{field._id}" value=getValue(field._id))
-				when 'SELECT'
-					select(name="#{field._id}" value=getValue(field._id))
-						each selectable in field.selectables
-							option(selected=getValue(field._id) == selectable ? '' : undefined) #{selectable}
-				when 'SELECTMULTI'
-					select(multiple="multiple" name="#{field._id}" value=getValue(field._id))
-						each selectable in field.selectables
-							option(selected=getValue(field._id) == selectable ? '' : undefined) #{selectable}
-				when 'TEXT'
-					input(type="text" name="#{field._id}" value=getValue(field._id))
+	table
+		each field in data.instance.page.fields
+			if field.active
+				tr
+					th
+						label #{field.label}
+					th
+						case field.type
+							when 'BOOLEAN'
+								select(name="#{field._id}")
+									option(selected=getValue(field._id) == 'Ja' ? '' : undefined) Ja
+									option(selected=getValue(field._id) == 'Nein' ? '' : undefined) Nein
+							when 'DATE'
+								input(type="date" name="#{field._id}" value=getValue(field._id))
+							when 'LONGTEXT'
+								textarea #{getValue(field._id)}
+							when 'MAIL'
+								input(type="email" name="#{field._id}" value=getValue(field._id))
+							when 'MONEY'
+								input(type='number' step="0.01" min="0" name="#{field._id}" value=getValue(field._id))
+							when 'NUMBER'
+								input(type='number' name="#{field._id}" value=getValue(field._id))
+							when 'SELECT'
+								select(name="#{field._id}" value=getValue(field._id))
+									each selectable in field.selectables
+										option(selected=getValue(field._id) == selectable ? '' : undefined) #{selectable}
+							when 'SELECTMULTI'
+								select(multiple="multiple" name="#{field._id}" value=getValue(field._id))
+									each selectable in field.selectables
+										option(selected=getValue(field._id) == selectable ? '' : undefined) #{selectable}
+							when 'TEXT'
+								input(type="text" name="#{field._id}" value=getValue(field._id))
 	input(type="hidden" name="instanceId" value="#{data.instance._id}")
 	input(type="submit" value="aktualisieren")

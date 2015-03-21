@@ -13,6 +13,7 @@ exports.setup = function(app) {
 			PageInstance.findById(req.query.instanceId)
 				.populate('page')
 				.populate('department')
+				.populate('editors')
 				.exec(function(err, instance) {
 					if (err) return jump(err);
 					if (!instance) return res.send({errors: ['Es konnte kein entsprechender Change Request gefunden werden.']});
@@ -28,6 +29,7 @@ exports.setup = function(app) {
 	app.post('/PageInstanceEdit', function(req, res, jump) {
 		PageInstance.findById(req.body.instanceId)
 			.populate('page')
+			.populate('editors')
 			.exec(function(err, instance) {
 				if (err) return jump(err);
 				if (!instance) return res.send({errors: ['Es konnte kein entsprechender Change Request gefunden werden.']});
