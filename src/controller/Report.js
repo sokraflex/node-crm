@@ -66,11 +66,6 @@ exports.setup = function(app) {
 							}
 							if (row.length == length) row.push('');
 						}
-						for (var k = 0; k < instance.values.length; ++k) {
-							var value = instance.values[k];
-							if (columnFieldIds.indexOf(value.field.toString()) >= 0)
-								row.push(value.value);
-						}
 						rows.push(row);
 					}
 				}

@@ -1,5 +1,6 @@
 Offene Fragen:
-	- Wer füllt die Aufwandstabelle aus? Jedes Department, immer die gleichen, auswählbare... ? 
+	- Wer füllt die Aufwandstabelle aus? Jedes Department, immer die gleichen, auswählbare... ? => Aufwandstabelle wird Departments, die es bearbeiten, zugewiesen
+	- Sind Seiten nach dem "abschließen" noch bearbeitbar?
 	- Was genau soll bei den Reports aufgelistet werden?
 		: alle PageInstances auflisten
 		:  - Status
@@ -8,72 +9,9 @@ Offene Fragen:
 		:  - Datum letze Änderung
 		:  - Kennzeichnung älter 5 Tage / 10 Tage
 
-
-
-Notfications
- - E-Mail-Benachrichtigung, wenn was zu tun
- 	- CR-Nummer
- 	- Was?
-
-Abteilungen
-// - Haben E-Mail Adresse
-
-Allgemein
- - Bearbeiter immer abspeichern
- - Bearbeitungsdatum immer abspeichern
-
-CR (model done as seen below, controller nothing done)
-// - Eingangsdatum = Erstellungsdatum
-// - Deadline-Datum
-// - Beschreibung
-// - Stellungnahme PPM/Stellungnahme PPM BG => String
- - KAM => KeyAccountManagement => Schnittstelle IT und Mandant, speichert CR des Mandanten im System ein
-// - Nummer => manuell eintragen
-// - Dateien anhängen
-// - Benachrichtigungszeit - wenn nach X Tagen der Laufzettel noch nicht von der nächsten Abteilung ausgefüllt wurde (nach E-Mail Benachrichtigung), dann benachrichtige vorherigen Bearbeiter
-
-Laufzettel
- - Datum => Datum der Bearbeitung des Laufzettels
- - "Empfehlung Operations" und rest voneinader trennen
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Fehlend
-	- Mail-Notifications (Ausgangsserver?)
-	- Fileupload
-	- Empfehlung Operations, Endbearbeitung CR
-	- CR-Timeout global & in days
-	- FTEOps, PTOps, FTEPPM & PTPPM sind Tage, und müssen per Formel in € umgerechnet werden
-	- Filtermöglichkeiten (All CR Sum) per Mandant, per Status, per Auftragsteller, ...
-	- Berechtigungen human-readable
-
-CR Prozess
-	BCB KAM
-		ChangeRequestAdd mit Titel, Mandant, CR-Steller, "Status" (isv 
-		)
+Todo:
+	- UserHome: STYLE!
+		- Tabelle: nur header-Zeile fett, rest nicht!
+		- Formular in eine Zeile, ohne fette Ränder dazwischen
+	- Tabellen: Ränder (Excel-Look?)
+	- Berechtigungen: Namen human-readable machen

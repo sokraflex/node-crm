@@ -9,6 +9,7 @@ var PageInstance = new db.Schema({
 	editors: [{type: ObjectId, ref: 'User'}],
 	editedAt: [{type: Date}],
 	finished: {type: Boolean, required: true, default: false},
+	notified: {type: Boolean, required: true, default: false},
 	values: [{
 		field: {type: ObjectId, ref: 'PageField'},
 		value: {type: String}

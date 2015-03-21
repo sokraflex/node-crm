@@ -15,7 +15,7 @@ exports.setup = function(app) {
 						function(next) {
 							if (setting) return next();
 
-							setting = new Setting({default: true, notificationTimeout: 720000000});
+							setting = new Setting({default: true, notificationTimeout: 864000000});
 							setting.save(next);
 						}
 					], function(err) {

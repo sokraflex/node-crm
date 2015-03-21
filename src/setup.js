@@ -25,12 +25,12 @@ var reports = {
 	}
 };
 var departments = {
-	'KAM': {},
-	'BM': {},
-	'E2E-PM': {},
-	'PPM-PV': {},
-	'PPM-SN': {},
-	'PPM-ZV': {}
+	'KAM': {email: 'martin.bories@megatherium.to'},
+	'BM': {email: 'martin.bories@megatherium.to'},
+	'E2E-PM': {email: 'martin.bories@megatherium.to'},
+	'PPM-PV': {email: 'martin.bories@megatherium.to'},
+	'PPM-SN': {email: 'martin.bories@megatherium.to'},
+	'PPM-ZV': {email: 'martin.bories@megatherium.to'}
 };
 var pages = {
 	'P1S1': {

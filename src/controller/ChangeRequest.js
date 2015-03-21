@@ -29,10 +29,8 @@ exports.setup = function(app) {
 						var field = page.fields[i];
 						if (field.default) {
 							instance.values.push({field: field._id, value: field.default});
-							console.log(field);
 						}
 					}
-					console.log(instance.values);
 					request.instances.push(instance._id);
 					async.parallel([
 						function(next) {instance.save(next);},
