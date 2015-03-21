@@ -47,6 +47,7 @@ exports.setup = function(app) {
 
 			var page = null;
 			var field = new PageField({
+				page: req.body.pageId,
 				label: req.body.label,
 				type: req.body.type,
 				selectables: []
