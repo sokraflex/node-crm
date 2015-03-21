@@ -3,13 +3,27 @@ var async = require('async'),
 	db = require('mongoose'),
 	Department = require('./model/Department.js'),
 	Page = require('./model/Page.js'),
-	PageField = require('./model/PageField.js');
+	PageField = require('./model/PageField.js'),
+	Report = require('./model/Report.js');
 
 var t1 = Date.now();
 // connect to db
 db.connect('mongodb://'+config.db.IP+':'+config.db.PORT+'/'+config.db.NAME);
 
 // create data
+var reports = {
+	'main': {
+		fields: [
+			{page: 'P1S1', fields: 'Status'},
+			{page: 'P1S2', fields: 'Status'},
+			{page: 'P2S1', fields: 'Status'},
+			{page: 'P2S1', fields: ['Aufwand PPM PV', 'Aufwand PPM ZV', 'Aufwand PPM SN'], type: 'added'},
+			{page: 'P3S1', fields: 'Status'},
+			{page: 'P4S1', fields: 'Status'},
+			{page: 'P5S1', fields: 'Status'}
+		]
+	}
+};
 var departments = {
 	'KAM': {},
 	'BM': {},
@@ -294,7 +308,35 @@ async.parallel([
 							pages[name][propertyName] = page[propertyName];
 					pages[name].save(next2);
 				});
-			}, next);
+			}, function(err) {
+				if (err) return next(err);
+
+				async.each(Object.keys(reports), function(reportName, next2) {
+					var report = reports[reportName];
+					var obj = new Report({
+						name: reportName,
+						fields: []
+					});
+
+					async.each(report.fields, function(field, next3) {
+						if (!Array.isArray(field.fields)) field.fields = [field.fields];
+						PageField.find({page: pages[field.page]._id, label: {$in: field.fields}})
+							.exec(function(err, items) {
+								if (err) return next3(err);
+								
+								var fields = {fields: []};
+								for (var i = 0; i < items.length; ++i)
+									fields.fields.push(items[i]._id);
+								if (field.type) fields.type = field.type;
+								obj.fields.push(fields);
+								next3();
+							});
+					}, function(err) {
+						if (err) return next2(err);
+						obj.save(next2);
+					});
+				}, next);
+			});
 		});
 	}
 ], function(err) {

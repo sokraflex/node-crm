@@ -82,6 +82,7 @@ app.all('*', function(req, res, callback) {
 	'PageField',
 	'PageInstance',
 	'Permission',
+	'Report',
 	'Setting',
 	'User',
 	'Usergroup'

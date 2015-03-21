@@ -1,5 +1,14 @@
 Offene Fragen:
-	- 
+	- Wer füllt die Aufwandstabelle aus? Jedes Department, immer die gleichen, auswählbare... ? 
+	- Was genau soll bei den Reports aufgelistet werden?
+		: alle PageInstances auflisten
+		:  - Status
+		:  - Kopfdaten aus P3S1
+		:  - Letzter Bearbeiter
+		:  - Datum letze Änderung
+		:  - Kennzeichnung älter 5 Tage / 10 Tage
+
+
 
 Notfications
  - E-Mail-Benachrichtigung, wenn was zu tun
