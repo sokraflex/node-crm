@@ -94,8 +94,7 @@ exports.setup = function(app) {
 		], function(err) {
 			if (err) return jump(err);
 
-			console.log(count);
-			res.send({template: 'UserHome', data: {user: res.locals.session.user, canAddChangeRequests: canAddChangeRequests}});
+			res.send({template: 'UserHome', data: {user: res.locals.session.user, canAddChangeRequests: canAddChangeRequests, count: count}});
 		});
 	});
 };
