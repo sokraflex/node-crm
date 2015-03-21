@@ -84,7 +84,7 @@ exports.setup = function(app) {
 				.populate('page')
 				.exec(function(err, field) {
 					if (err) return jump(err);
-					if (!page) return res.send({errors: ['Das angeforderte Feld konnte nicht gefunden werden.']});
+					if (!field) return res.send({errors: ['Das angeforderte Feld konnte nicht gefunden werden.']});
 
 					res.send({template: 'PageFieldEdit', data: {field: field}});
 				});
