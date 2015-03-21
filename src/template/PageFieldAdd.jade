@@ -13,22 +13,22 @@ form(method="POST" action="/PageFieldAdd?sessionId=#{sessionId}")
 			th Aktiv
 		tr
 			th
-				input(type="text")
+				input(name="label" type="text")
 			th
-				select
-					option 'BOOLEAN'
-					option 'COSTS'
-					option 'DATE'
-					option 'LONGTEXT'
-					option 'MAIL'
-					option 'MONEY'
-					option 'NUMBER'
-					option 'SELECT'
-					option 'SELECTMULTI'
-					option 'TEXT'
+				select(name="type")
+					option(value="BOOLEAN") Ja/Nein
+					option(value="COSTS") Kosten
+					option(value="DATE") Datum
+					option(value="LONGTEXT") Langer Text
+					option(value="MAIL") Email
+					option(value="MONEY") Geld
+					option(value="NUMBER") Zahl
+					option(value="SELECT") Auswahl
+					option(value="SELECTMULTI") Mehrfach Auswahl
+					option(value="TEXT") Text
 			th
-				input(type="text")
+				input(name="selectables" type="text")
 			th
-				input(type="radio" checked="true")
-	//input(type="hidden" name="fieldId" value="#{data.field._id}")
+				input(name="active" type="radio" checked="true")
+	input(type="hidden" name="pageId" value="#{data.page._id}")
 	input(type="submit" value="Hinzufügen")
