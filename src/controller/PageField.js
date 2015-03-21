@@ -66,7 +66,8 @@ exports.setup = function(app) {
 					Page.findById(req.body.pageId)
 						.exec(function(err, item) {
 							page = item;
-							next(err);
+							page.fields.push(field._id);
+							page.save(next);
 						});
 				}
 			], function(err) {
