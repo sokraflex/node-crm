@@ -10,7 +10,7 @@ if status == 'success'
 form(method="POST" action="/ChangeRequestEdit?sessionId=#{data.sessionId}")
 	div.field
 		label Titel
-		input(type="text" name="title" required="required" value="#{data.request.title}")
+		input(type="text" name="title" required value="#{data.request.title}")
 	div.field
 		label Mandant
 		select(name="customerId" required="required")

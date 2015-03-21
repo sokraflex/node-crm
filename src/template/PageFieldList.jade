@@ -19,9 +19,10 @@ table
 			th #{field.label}
 			th #{field.type}
 			th
-				select
-					each selectable in field.selectables
-						option #{selectable}
+				if field.type == 'SELECT' || field.type == 'SELECTMULTI'
+					select
+						each selectable in field.selectables
+							option #{selectable}
 			th
 				a(href="/PageFieldEdit?sessionId=#{sessionId}&fieldId=#{field._id}") Editieren
 			th

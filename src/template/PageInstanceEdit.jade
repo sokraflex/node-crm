@@ -21,8 +21,8 @@ form(method="POST" action="/PageInstanceEdit?sessionId=#{data.sessionId}")
 			case field.type
 				when 'BOOLEAN'
 					select(name="#{field._id}")
-						option(selected=getValue(field._id) == 'Ja') Ja
-						option(selected=getValue(field._id) == 'Nein') Nein
+						option(selected=getValue(field._id) == 'Ja' ? '' : undefined) Ja
+						option(selected=getValue(field._id) == 'Nein' ? '' : undefined) Nein
 				when 'DATE'
 					input(type="date" name="#{field._id}" value=getValue(field._id))
 				when 'LONGTEXT'
@@ -36,11 +36,11 @@ form(method="POST" action="/PageInstanceEdit?sessionId=#{data.sessionId}")
 				when 'SELECT'
 					select(name="#{field._id}" value=getValue(field._id))
 						each selectable in field.selectables
-							option #{selectable}
+							option(selected=getValue(field._id) == selectable ? '' : undefined) #{selectable}
 				when 'SELECTMULTI'
 					select(multiple="multiple" name="#{field._id}" value=getValue(field._id))
 						each selectable in field.selectables
-							option #{selectable}
+							option(selected=getValue(field._id) == selectable ? '' : undefined) #{selectable}
 				when 'TEXT'
 					input(type="text" name="#{field._id}" value=getValue(field._id))
 	input(type="hidden" name="instanceId" value="#{data.instance._id}")
