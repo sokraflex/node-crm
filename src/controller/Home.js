@@ -62,13 +62,13 @@ exports.setup = function(app) {
 													.exec(function(err, instances) {
 														if (err) return next4(err);
 
-														count[page._id] = {_total: instances.length};
+														count[page.name] = {_total: instances.length};
 														async.each(instances, function(instance, next5) {
 															for (var i = 0; i < instance.values.length; ++i) {
 																var value = instance.values[i];
 																if (!value.field.equals(statusFieldId)) continue;
-																if (!count[page._id].hasOwnProperty(value.value)) count[page._id][value.value] = 1;
-																else ++count[page._id][value.value];
+																if (!count[page.name].hasOwnProperty(value.value)) count[page.name][value.value] = 1;
+																else ++count[page.name][value.value];
 																break;
 															}
 
