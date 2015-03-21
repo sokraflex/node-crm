@@ -1,0 +1,36 @@
+include ./header.jade
+
+h1 Page #{data.page.name} Felder
+
+include ./errors.jade
+
+if status = 'success'
+	p.success Die Page wurde erfolgreich aktualisiert
+
+table
+	tr
+		th Feldlabel
+		th Feldtyp
+		th Auswahlliste
+		th Aktiv
+	tr
+		th
+			input(type="text")
+		th
+			select
+				option 'BOOLEAN'
+				option 'COSTS'
+				option 'DATE'
+				option 'LONGTEXT'
+				option 'MAIL'
+				option 'MONEY'
+				option 'NUMBER'
+				option 'SELECT'
+				option 'SELECTMULTI'
+				option 'TEXT'
+		th
+			input(type="text")
+		th
+			input(type="radio" checked="#{data.field.active}")
+
+

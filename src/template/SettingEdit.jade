@@ -4,6 +4,9 @@ h1 Einstellungen bearbeiten
 
 include ./errors.jade
 
+if status = 'success'
+	p.success Die Settings wurden erfolgreich aktualisiert
+
 form(method="POST"  action="/SettingEdit?sessionId=#{data.sessionId}")
 	div.field
 		label Erinnerung nach

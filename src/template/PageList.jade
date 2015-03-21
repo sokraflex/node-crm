@@ -1,0 +1,17 @@
+include ./header.jade
+
+h1 Page Auflistung
+
+include ./errors.jade
+
+table
+	tr
+		th Name
+		th Department
+		th # Felder
+	each page in data.pages
+		tr
+			th
+				a(href="/PageFieldList?sessionId=#{sessionId}&pageId=#{page._id}") #{page.name}
+			th #{page.department.name}
+			th #{page.fields.length}
