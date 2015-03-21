@@ -19,7 +19,6 @@ encryption.oneWay(User, 'password', {compareMethod: true});
 // add hasPermission method
 User.methods.hasPermission = function(name, callback) {
 	Permission.findOne({value: true, usergroup: {$in: this.usergroups}, name: name}, function(err, permission) {
-		console.log(permission);
 		if (err) return callback(err);
 		if (!permission) return callback(false, false);
 		callback(false, true);
