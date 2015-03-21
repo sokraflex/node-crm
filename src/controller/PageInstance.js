@@ -137,7 +137,7 @@ exports.setup = function(app) {
 
 								function(next) {
 									if (!instance.page.nextPage) return next();
-									if (!finished) return next();
+									if (!instance.finished) return next();
 
 									var nextPage = new PageInstance({
 										page: instance.page.nextPage._id,
