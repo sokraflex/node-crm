@@ -11,9 +11,9 @@ table
 		th # Felder
 	each page in data.pages
 		tr
-			th
+			td
 				a(href="/PageFieldList?sessionId=#{sessionId}&pageId=#{page._id}") #{page.name}
-			th
+			td
 				if page.department != undefined 
 					#{page.department.name}
-			th #{page.fields.length}
+			td #{page.fields.length}

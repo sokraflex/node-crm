@@ -26,9 +26,9 @@ form(method="POST" action="/PageFieldEdit?sessionId=#{sessionId}")
 			th Auswahlliste
 			th Aktiv
 		tr
-			th
+			td
 				input(type="text" value="#{data.field.label}")
-			th
+			td
 				select
 					option( selected=check('BOOLEAN') ? '' : undefined) 'BOOLEAN'
 					option( selected=check('COSTS') ? '' : undefined) 'COSTS'
@@ -40,10 +40,10 @@ form(method="POST" action="/PageFieldEdit?sessionId=#{sessionId}")
 					option( selected=check('SELECT') ? '' : undefined) 'SELECT'
 					option( selected=check('SELECTMULTI') ? '' : undefined) 'SELECTMULTI'
 					option( selected=check('TEXT') ? '' : undefined) 'TEXT'
-			th
+			td
 				if data.field.type == 'SELECT' || data.field.type == 'SELECTMULTI'
 					input(type="text" value=selectableToString(data.field.selectables))
-			th
+			td
 				input(type="radio" checked=data.field.active ? '' : undefined)
 	input(type="hidden" name="fieldId" value="#{data.field._id}")
 	input(type="submit" value="aktualisieren")

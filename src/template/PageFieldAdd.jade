@@ -15,9 +15,9 @@ form(method="POST" action="/PageFieldAdd?sessionId=#{sessionId}")
 			th Auswahlliste
 			th Aktiv
 		tr
-			th
+			td
 				input(name="label" type="text")
-			th
+			td
 				select(name="type")
 					option(value="BOOLEAN") Ja/Nein
 					option(value="COSTS") Kosten
@@ -29,9 +29,9 @@ form(method="POST" action="/PageFieldAdd?sessionId=#{sessionId}")
 					option(value="SELECT") Auswahl
 					option(value="SELECTMULTI") Mehrfach Auswahl
 					option(value="TEXT") Text
-			th
+			td
 				input(name="selectables" type="text")
-			th
+			td
 				input(name="active" type="radio" checked="true")
 	input(type="hidden" name="pageId" value="#{data.page._id}")
 	input(type="submit" value="Hinzufügen")

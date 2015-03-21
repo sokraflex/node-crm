@@ -21,15 +21,15 @@ table
 		th Zustände
 	each obj, page in data.count
 		tr
-			th #{page}
-			th #{obj._total}
+			td #{page}
+			td #{obj._total}
 			if Object.keys(obj.stati).length > 0
-				th
+				td
 					table
 						tr
 							th Zustand
 							th Anzahl
 						each num, status in obj.stati
 							tr
-								th #{status}
-								th #{num}
+								td #{status}
+								td #{num}

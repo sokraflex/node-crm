@@ -4,7 +4,7 @@ h1 Page #{data.page.name} Felder
 
 include ./errors.jade
 
-if status = 'success'
+if status == 'success'
 	p.success Die Page wurde erfolgreich aktualisiert
 
 table
@@ -16,16 +16,16 @@ table
 		th Aktiv
 	each field in data.page.fields
 		tr
-			th #{field.label}
-			th #{field.type}
-			th
+			td #{field.label}
+			td #{field.type}
+			td
 				if field.type == 'SELECT' || field.type == 'SELECTMULTI'
 					select
 						each selectable in field.selectables
 							option #{selectable}
-			th
+			td
 				a(href="/PageFieldEdit?sessionId=#{sessionId}&fieldId=#{field._id}") Editieren
-			th
+			td
 				input(type="radio" checked="#{field.active}" readonly)
 	button(onclick="location.href='/PageFieldAdd?sessionId=#{sessionId}&pageId=#{data.page._id}'") Feld hinzufügen
 
