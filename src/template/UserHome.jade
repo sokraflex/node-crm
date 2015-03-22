@@ -1,35 +1,36 @@
 include ./header.jade
-p Willkommen, #{data.user.name} #{data.user.surname}!
+h1.title Willkommen, #{data.user.name} #{data.user.surname}!
 
 if data.canAddChangeRequests
 	div.button
 		a(href="/ChangeRequestAdd?sessionId=#{sessionId}") Change Request erstellen
 
 form(method="GET" action="/UserHome")
-	p die letzten 
+	label die letzten 
 	select(name="days")
 		option(value="5") 5 Tage
 		option(value="10") 10 Tage
-	p anzeigen
+	label  anzeigen
+	
 	input(type="hidden" name="sessionId" value="#{sessionId}")
 	input(type="submit" value="Aktualisieren")
 
 table
-	tr
-		th Seitenname
-		th Gesamt
-		th Zustände
-	each obj, page in data.count
+	thead
 		tr
-			td #{page}
-			td #{obj._total}
-			if Object.keys(obj.stati).length > 0
-				td
-					table
-						tr
-							th Zustand
-							th Anzahl
-						each num, status in obj.stati
-							tr
-								td #{status}
-								td #{num}
+			th Seitenname
+			th Gesamt
+			th Zustand
+			th Anzahl
+	tbody
+		each obj, page in data.count
+			tr
+				td #{page}
+				td #{obj._total}
+				if Object.keys(obj.stati).length > 0
+					td(colspan="2")
+						table(width="100%")
+							each num, status in obj.stati
+								tr
+									td(width="60%") #{status}
+									td #{num}

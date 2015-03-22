@@ -1,3 +1,13 @@
+	
+
+body {
+	display: inline-block;
+	font-family: "Lucida Sans Unicode", "Lucida Grande", Sans-Serif;
+	margin: 0;
+	padding: 0;
+	width: 100%;
+}
+
 p.line {margin-top: 0; margin-bottom: 0;}
 
 /* Formulare */
@@ -9,7 +19,96 @@ div.field em {display: block; color: gray;}
 td.center {text-align: center;}
 td.cost {min-width: 100px; text-align: right;}
 
+.left {
+	text-align: left;
+	float: left;
+	margin-left: 0;
+}
+
+.right {
+	text-align: right;
+	float: right;
+	margin-right: 0;
+}
+
+table {
+	border-collapse: collapse;
+	width: 800px;
+
+}
+
+thead {
+	border-bottom: 2px solid #003878;
+}
+
+th {
+	color: #003878;
+	padding: 20px;
+	text-align: center;
+	padding-left: 20px;
+	padding-right: 20px;
+}
+
+td {
+	padding: 10px;
+	text-align: center;
+}
+
+tr:nth-child(n+2) {
+	border-top: 1px solid #ccc;
+}
+
+tr:hover {
+	color: #5088a8;
+	border-top-color: #cacaca;
+}
+
 /* Fehler & Success */
 .error {color: red;}
 .warning {color: #C5AA19;}
 .success {color: green;}
+
+.title {
+	width: 100%;
+	margin-left: auto;
+	margin-right: auto;
+	text-align: center;
+}
+
+.menu {
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+	overflow: hidden;
+	border-bottom: 2px solid #003878;
+	width: 100%;
+}
+
+.menu li {
+	float: left;
+}
+
+.menu a {
+	color: #003878;
+	border: 1px solid #5088a8;
+	margin-right: 10px;
+	padding: 10px;
+	padding-left: 5px;
+	padding-right: 5px;
+	text-align: center;
+	font-weight: bold;
+	text-decoration: none;	
+	display: block;
+	border-bottom: none;
+	border-top-left-radius: 5px;
+	border-top-right-radius: 5px;
+}
+
+.menu .active {
+	background-color: #b0d8fa;
+}
+
+.menu a:hover, a:active {
+	color: #5088a8;
+	border-color: #80a8d8;
+}
