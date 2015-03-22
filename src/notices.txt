@@ -17,6 +17,9 @@ Todo:
 	- Berechtigungen: Namen human-readable machen
 	- headlines darstellen!
 	- PageList: Tabellenstyle - nur headline fett, department darstellen
+	- Formulare
+		- Alle Eingabefelder linksbündig, sodass sie nicht komisch mitten in der Seite stehen, wenn eine große Tabelle angezeigt wird
+		- alle Eingabefelder mit einer mindest-breite, damit diese in der Regel gleich lang erscheinen
 	- ReportView
 		- Kostentabelle mit Rändern (Excel-Stil, d.h. keine doppelten Ränder wie in HTML normalerweise)
 		- Titel: "Bericht"
