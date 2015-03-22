@@ -60,7 +60,11 @@ app.use(function(req, res, next) {
 
 // handle sessionId field
 app.all('*', function(req, res, callback) {
-	if (!req.query.sessionId) return callback();
+	if (!req.query.sessionId) {
+		res.locals.session = new Session();
+		res.locals.session.save(callback);
+		return;
+	}
 
 	Session.findOne({_id: req.query.sessionId})
 		.exec(function(err, session) {

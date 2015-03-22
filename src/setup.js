@@ -4,7 +4,10 @@ var async = require('async'),
 	Department = require('./model/Department.js'),
 	Page = require('./model/Page.js'),
 	PageField = require('./model/PageField.js'),
-	Report = require('./model/Report.js');
+	Permission = require('./model/Permission.js'),
+	Report = require('./model/Report.js'),
+	User = require('./model/User.js'),
+	Usergroup = require('./model/Usergroup.js');
 
 var t1 = Date.now();
 // connect to db
@@ -223,6 +226,32 @@ var pages = {
 };
 
 async.parallel([
+	// create users, groups, permissions
+	function(next) {
+		var group = new Usergroup({name: 'Administrator'});
+		var user = new User({username: 'admin', name: 'Christian', surname: 'Bories', email: 'cbories@bcb-ag.de', password: 'jsuidfuusd8w3($)H§djDAS', usergroups: [group._id]});
+		var permissions = [
+			'department.canList', 'department.canAdd', 'department.canEdit', 'department.canDelete',
+			'page.canList',
+			'pageField.canList', 'pageField.canAdd', 'pageField.canEdit', 'pageField.canDelete',
+			'permission.canList', 'permission.canAdd', 'permission.canDelete',
+			'report.canView',
+			'setting.canEdit',
+			'user.canEdit',
+			'usergroup.canList', 'usergroup.canAdd', 'usergroup.canEdit', 'usergroup.canDelete'
+		];
+		async.parallel([
+			function(next2) {group.save(next2);},
+			function(next2) {user.save(next2);},
+			function(next2) {
+				async.each(permissions, function(name, next3) {
+					var permission = new Permission({name: name, usergroup: group._id, value: true});
+					permission.save(next3);
+				}, next2);
+			}
+		], next);
+	},
+
 	function(next) {
 		async.each(Object.keys(departments), function(departmentName, next2) {
 			var department = new Department({name: departmentName});
