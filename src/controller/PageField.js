@@ -131,8 +131,8 @@ exports.setup = function(app) {
 				var page = field.page;
 				field.active = false;
 				for (var i = 0; i < page.fields.length; ++i) {
-					if (page.fields[i].field.equals(field._id)) {
-						page.fields = page.fields.splice(i, 1);
+					if (page.fields[i].equals(field._id)) {
+						page.fields.splice(i, 1);
 						break;
 					}
 				}
@@ -143,7 +143,7 @@ exports.setup = function(app) {
 				], function(err) {
 					if (err) return jump(err);
 
-					res.writeHead(302, {'Location': '/PageFieldList?pageId='+field.page._id+'&status=delete.success'});
+					res.writeHead(302, {'Location': '/PageFieldList?sessionId='+res.locals.session._id+'&pageId='+field.page._id+'&status=delete.success'});
 					res.end();
 				});
 			});

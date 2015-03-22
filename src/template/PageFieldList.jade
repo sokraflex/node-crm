@@ -12,8 +12,7 @@ table
 		th Feldlabel
 		th Feldtyp
 		th Auswahlliste
-		th Editieren
-		th Aktiv
+		th(colspan="2") Aktionen
 	each field in data.page.fields
 		tr
 			td #{field.label}
@@ -24,9 +23,9 @@ table
 						each selectable in field.selectables
 							option #{selectable}
 			td
-				a(href="/PageFieldEdit?sessionId=#{sessionId}&fieldId=#{field._id}") Editieren
+				a(href="/PageFieldEdit?sessionId=#{sessionId}&fieldId=#{field._id}") Bearbeiten
 			td
-				input(type="radio" checked="#{field.active}" readonly)
+				a(href="/PageFieldDelete?sessionId=#{sessionId}&fieldId=#{field._id}") Entfernen
 	button(onclick="location.href='/PageFieldAdd?sessionId=#{sessionId}&pageId=#{data.page._id}'") Feld hinzufügen
 
 
