@@ -1,23 +1,70 @@
 
 
 body {
-	display: inline-block;
+	display: inline;
 	font-family: "Lucida Sans Unicode", "Lucida Grande", Sans-Serif;
 	margin: 0;
 	padding: 0;
 	width: 100%;
+	font-size: 15px;
+}
+
+select {
+	font-size: medium;
+	min-width: 200px;
+}
+
+table < input {
+	width: 80%;
+}
+
+textarea {
+	width: 80%;
 }
 
 p.line {margin-top: 0; margin-bottom: 0;}
 
 /* Formulare */
-div.field {display: block;}
-div.field label {width: 200px; display: inline-block;}
-div.field em {display: block; color: gray;}
+.field {display: block;}
+.field label {width: 200px; display: inline-block;}
+.field em {display: block; color: gray;}
 
 /* Tabellen */
 td.center {text-align: center;}
 td.cost {min-width: 100px; text-align: right;}
+
+a {
+	color: #fff;
+	text-decoration: none;
+	font-family: "Lucida Sans Unicode", "Lucida Grande", Sans-Serif;
+}
+
+.divider {
+	width: 100%;
+	border-bottom: 1px solid #666;
+	margin: 20px 0;
+}
+
+.button {
+	border-bottom: 2px solid #003878;
+	display: inline-block;
+	padding: 20px 0;
+}
+
+.button .innerButton {
+	padding: 18px 20px;
+	border-bottom: 2px solid #003878;
+	background-color: #003878;
+	color: #fff;
+	font-size: 20px;
+	text-decoration: none;
+	display: inline;
+	overflow: auto;
+}
+
+.innerButton:hover {
+	border-bottom-color: #70a8c8;
+}
 
 .left {
 	text-align: left;
@@ -33,7 +80,7 @@ td.cost {min-width: 100px; text-align: right;}
 
 table {
 	border-collapse: collapse;
-	width: 800px;
+	width: 100%;
 
 }
 
@@ -44,14 +91,14 @@ thead {
 th {
 	color: #003878;
 	padding: 20px;
-	text-align: center;
+	text-align: left;
 	padding-left: 20px;
 	padding-right: 20px;
 }
 
 td {
 	padding: 10px;
-	text-align: center;
+	text-align: left;
 }
 
 tr:nth-child(n+2) {
@@ -76,40 +123,36 @@ tr:hover {
 }
 
 .menu {
-	list-style-type: none;
+	list-style: none;
 	margin: 0;
 	padding: 0;
 	overflow: hidden;
-	border-bottom: 2px solid #003878;
 	width: 100%;
+	border-bottom: 2px solid #003878;
 }
 
 .menu li {
 	float: left;
+	width:12.5%;
 }
 
 .menu a {
-	color: #003878;
-	border: 1px solid #5088a8;
-	margin-right: 10px;
-	padding: 10px;
-	padding-left: 5px;
-	padding-right: 5px;
+	color: #fff;
+	background-color: #003878;
+	padding: 15px;
+	padding-left: 35px;
+	padding-right: 35px;
 	text-align: center;
 	font-weight: bold;
 	text-decoration: none;	
 	display: block;
-	border-bottom: none;
-	border-top-left-radius: 5px;
-	border-top-right-radius: 5px;
+	border-bottom: 2px solid #003878;
 }
 
 .menu .active {
-	background-color: #d5dfe0;
-	border-width: 2px;
+	border-bottom-color: #90c8e8;
 }
 
 .menu a:hover, a:active {
-	color: #5088a8;
-	border-color: #80a8d8;
+	border-bottom-color: #70a8c8;
 }

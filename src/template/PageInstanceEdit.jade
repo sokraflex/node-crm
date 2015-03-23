@@ -103,4 +103,5 @@ form(method="POST" action="/PageInstanceEdit?sessionId=#{data.sessionId}")
 							when 'TEXT'
 								input(type="text" name="#{field._id}" value=getValue(field._id))
 	input(type="hidden" name="instanceId" value="#{data.instance._id}")
-	input(type="submit" value="aktualisieren")
+	.button
+		input.innerButton(type="submit" value="Aktualisieren")

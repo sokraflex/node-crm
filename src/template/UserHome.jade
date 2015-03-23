@@ -1,9 +1,13 @@
 include ./header.jade
 h1.title Willkommen, #{data.user.name} #{data.user.surname}!
 
+.divider
+
 if data.canAddChangeRequests
 	div.button
-		a(href="/ChangeRequestAdd?sessionId=#{sessionId}") Change Request erstellen
+		a.innerButton(href="/ChangeRequestAdd?sessionId=#{sessionId}") Change Request erstellen
+
+.divider
 
 form(method="GET" action="/UserHome")
 	label die letzten 
@@ -14,6 +18,8 @@ form(method="GET" action="/UserHome")
 	
 	input(type="hidden" name="sessionId" value="#{sessionId}")
 	input(type="submit" value="Aktualisieren")
+
+
 
 table
 	thead
