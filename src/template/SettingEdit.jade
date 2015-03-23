@@ -12,4 +12,5 @@ form(method="POST"  action="/SettingEdit?sessionId=#{data.sessionId}")
 		label Erinnerung nach
 		input(type="number" step="0.01" name="notificationTimeout" value="#{data.setting.notificationTimeout/86400000}")
 		em Geben Sie die Anzahl der Tage an, nach denen eine Benachrichtigung aufgrund der Nichtbearbeitung des Change Requests erfolgt.
-	input(type="submit" value="Aktualisieren")
+	.button
+		input.innerButton(type="submit" value="Aktualisieren")

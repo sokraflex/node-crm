@@ -8,9 +8,11 @@ if status == 'add.success'
 
 h2 Neue Berechtigung gewähren
 form(method="POST" action="/PermissionAdd?sessionId=#{data.sessionId}")
-	input(type="text" name="name" placeholder="Name")
+	.field
+		input(type="text" name="name" placeholder="Name")
 	input(type="hidden" name="usergroupId" value="#{data.usergroup._id}")
-	input(type="submit" value="Berechtigung gewähren")
+	.button
+		input.innerButton(type="submit" value="Berechtigung gewähren")
 
 h2 Bereits gewährte Berechtigungen (#{data.permissions.length})
 table
@@ -23,4 +25,5 @@ table
 			tr
 				td #{permission.name}
 				td
-					a(href="/PermissionDelete?sessionId=#{data.sessionId}&permissionId=#{permission._id}") Entfernen
+					.button
+						a.innerButton(href="/PermissionDelete?sessionId=#{data.sessionId}&permissionId=#{permission._id}") Entfernen

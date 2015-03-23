@@ -14,14 +14,18 @@ table
 		each usergroup in data.usergroups
 			tr
 				td #{usergroup.name}
-				td.center
+				td
 					if !usergroup.default
-						a(href="/UsergroupDefault?sessionId=#{data.sessionId}&usergroupId=#{usergroup._id}") Als Standard setzen
+						.button
+							a.innerButton(href="/UsergroupDefault?sessionId=#{data.sessionId}&usergroupId=#{usergroup._id}") Als Standard setzen
 					else
 						span X
 				td
-					a(href="/PermissionList?sessionId=#{data.sessionId}&usergroupId=#{usergroup._id}") Berechtigungen
+					.button
+						a.innerButton(href="/PermissionList?sessionId=#{data.sessionId}&usergroupId=#{usergroup._id}") Berechtigungen
 				td
-					a(href="/UsergroupEdit?sessionId=#{data.sessionId}&usergroupId=#{usergroup._id}") Bearbeiten
+					.button
+						a.innerButton(href="/UsergroupEdit?sessionId=#{data.sessionId}&usergroupId=#{usergroup._id}") Bearbeiten
 				td
-					a(href="/UsergroupDelete?sessionId=#{data.sessionId}&usergroupId=#{usergroup._id}") Löschen
+					.button
+						a.innerButton(href="/UsergroupDelete?sessionId=#{data.sessionId}&usergroupId=#{usergroup._id}") Löschen

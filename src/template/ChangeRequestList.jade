@@ -3,7 +3,7 @@ include ./header.jade
 h1 Alle Change Requests (#{data.requests.length})
 
 div.button
-	a(href="/ChangeRequestAdd?sessionId=#{data.sessionId}") CR hinzufügen
+	a.innerButton(href="/ChangeRequestAdd?sessionId=#{data.sessionId}") CR hinzufügen
 
 if status == 'success.delete'
 	p.success Der Change Request wurde erfolgreich gelöscht.
@@ -29,8 +29,11 @@ table
 				else
 					td.warning Keine Abteilungen zugewiesen
 				td
-					a(href="/ChangeRequestView?sessionId=#{data.sessionId}&requestId=#{request._id}") Ansehen
+					.button
+						a.innerButton(href="/ChangeRequestView?sessionId=#{data.sessionId}&requestId=#{request._id}") Ansehen
 				td
-					a(href="/ChangeRequestEdit?sessionId=#{data.sessionId}&requestId=#{request._id}") Bearbeiten
+					.button
+						a.innerButton(href="/ChangeRequestEdit?sessionId=#{data.sessionId}&requestId=#{request._id}") Bearbeiten
 				td
-					a(href="/ChangeRequestDelete?sessionId=#{data.sessionId}&requestId=#{request._id}") Löschen
+					.button
+						a.innerButton(href="/ChangeRequestDelete?sessionId=#{data.sessionId}&requestId=#{request._id}") Löschen

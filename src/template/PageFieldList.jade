@@ -23,9 +23,12 @@ table
 						each selectable in field.selectables
 							option #{selectable}
 			td
-				a(href="/PageFieldEdit?sessionId=#{sessionId}&fieldId=#{field._id}") Bearbeiten
+				.button
+					a.innerButton(href="/PageFieldEdit?sessionId=#{sessionId}&fieldId=#{field._id}") Bearbeiten
 			td
-				a(href="/PageFieldDelete?sessionId=#{sessionId}&fieldId=#{field._id}") Entfernen
-	button(onclick="location.href='/PageFieldAdd?sessionId=#{sessionId}&pageId=#{data.page._id}'") Feld hinzufügen
+				.button
+					a.innerButton(href="/PageFieldDelete?sessionId=#{sessionId}&fieldId=#{field._id}") Entfernen
+	.button
+		button.innerButton(onclick="location.href='/PageFieldAdd?sessionId=#{sessionId}&pageId=#{data.page._id}'") Feld hinzufügen
 
 

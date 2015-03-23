@@ -1,25 +1,26 @@
 ul.menu
 	if !data || !data.sessionId
 		li
-			a(href="/") Startseite
+			a(href="/" class= template == '' ? "active" : undefined) Startseite
 		li
-			a(href="/UserLogin") Anmelden
+			a(href="/UserLogin" class= template == 'UserLogin' ? "active" : undefined) Anmelden
 		li
-			a(href="/UserAdd") Registrieren
+			a(href="/UserAdd" class= template == 'UserAdd' ? "active" : undefined) Registrieren
 	else
 		li
-			a.active(href="/UserHome?sessionId=#{data.sessionId}") Startseite
+			a(href="/UserHome?sessionId=#{data.sessionId}" class= template == 'UserHome' ? "active" : undefined) Startseite
 		li
 			a(href="/UserLogout?sessionId=#{data.sessionId}") Abmelden
 		li
-			a(href="/SettingEdit?sessionId=#{data.sessionId}") Einstellungen
+			a(href="/SettingEdit?sessionId=#{data.sessionId}" class= template == 'SettingEdit' ? "active" : undefined) Einstellungen
 		li
-			a(href="/UserList?sessionId=#{data.sessionId}") Benutzer
+			a(href="/UserList?sessionId=#{data.sessionId}" class= template == 'UserList' ? "active" : undefined) Benutzer
 		li
-			a(href="/UsergroupList?sessionId=#{data.sessionId}") Benutzergruppen
+			a(href="/UsergroupList?sessionId=#{data.sessionId}" class= template == 'UsergroupList' ? "active" : undefined) Benutzergruppen
 		li
-			a(href="/DepartmentList?sessionId=#{data.sessionId}") Abteilungen
+			a(href="/DepartmentList?sessionId=#{data.sessionId}" class= template == 'DepartmentList' ? "active" : undefined) Abteilungen
 		li
-			a(href="/ReportView?sessionId=#{sessionId}&reportName=main") Bericht
+			a(href="/ReportView?sessionId=#{sessionId}&reportName=main" class= template == 'ReportView' ? "active" : undefined) Bericht
 		li
-			a(href="/PageList?sessionId=#{sessionId}") Seiten
+			a(href="/PageList?sessionId=#{sessionId}" class= template == 'PageList' ? "active" : undefined) Seiten
+p #{template}

@@ -46,6 +46,7 @@ form(method="POST" action="/PageFieldEdit?sessionId=#{sessionId}")
 			td
 				input(type="radio" checked=data.field.active ? '' : undefined)
 	input(type="hidden" name="fieldId" value="#{data.field._id}")
-	input(type="submit" value="aktualisieren")
+	.button
+		input.innerButton(type="submit" value="aktualisieren")
 
 

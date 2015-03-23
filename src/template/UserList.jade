@@ -15,4 +15,5 @@ table
 				td #{user.name} #{user.surname}
 				td #{user.email}
 				td
-					a(href="/UserEdit?sessionId=#{data.sessionId}&userId=#{user._id}") Bearbeiten
+					.button
+						a.innerButton(href="/UserEdit?sessionId=#{data.sessionId}&userId=#{user._id}") Bearbeiten

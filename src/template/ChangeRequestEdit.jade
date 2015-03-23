@@ -17,4 +17,5 @@ form(method="POST" action="/ChangeRequestEdit?sessionId=#{data.sessionId}")
 			each customer in data.customers
 				option(value="#{customer._id}" selected=customer._id == data.request.customer) #{customer.name}
 	input(type="hidden" name="requestId" value="#{data.request._id}")
-	input(type="submit" value="Aktualisieren")
+	.button
+		input.innerButton(type="submit" value="Aktualisieren")

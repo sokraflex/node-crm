@@ -3,7 +3,7 @@ include ./header.jade
 h1 Abteilungen (#{data.departments.length})
 
 div.button
-	a(href="/DepartmentAdd?sessionId=#{data.sessionId}") Neue Abteilung erstellen
+	a.innerButton(href="/DepartmentAdd?sessionId=#{data.sessionId}") Neue Abteilung erstellen
 
 table
 	thead
@@ -15,6 +15,8 @@ table
 			tr
 				td #{department.name}
 				td
-					a(href="/DepartmentView?sessionId=#{data.sessionId}&departmentId=#{department._id}") Bearbeiten
+					.button
+						a.innerButton(href="/DepartmentView?sessionId=#{data.sessionId}&departmentId=#{department._id}") Bearbeiten
 				td
-					a(href="/DepartmentDelete?sessionId=#{data.sessionId}&departmentId=#{department._id}") Löschen
+					.button
+						a.innerButton(href="/DepartmentDelete?sessionId=#{data.sessionId}&departmentId=#{department._id}") Löschen
