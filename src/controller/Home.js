@@ -40,7 +40,7 @@ exports.setup = function(app) {
 
 									async.parallel([
 										function(next3) {
-											async.each(pages, function(page, next4) {
+											async.eachSeries(pages, function(page, next4) {
 												var statusFieldId = null;
 												for (var i = 0; i < page.fields.length; ++i)
 													if (page.fields[i].label == 'Status') {

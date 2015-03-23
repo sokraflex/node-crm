@@ -22,7 +22,9 @@ exports.setup = function(app) {
 					res.locals.session.save(function(err) {
 						if (err) return jump(err);
 
-						res.send({status: 'success', template: 'UserLogin'});
+						res.writeHead(302, {'Location': '/UserHome?sessionId='+res.locals.session._id});
+						res.end();
+						//res.send({status: 'success', template: 'UserLogin'});
 					});
 				});
 			});
