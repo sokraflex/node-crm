@@ -1,3 +1,60 @@
+- /Home: "Home"?!
+- PageInstanceEdit: "Aktualisieren"-Button => strich daunter weg (wack)
+
+
+
+ToDo
+	- Verrechnungssätze in Einstellungen ermöglichen
+	- Summenbildung bei Tabelle: FTE Ops, FTE PPM, IT-PT, PT Ops, PT PPM mit entspr Verrechnungssätzen multiplizieren
+	- Siehe auch: Excel CR-Deckblatt
+	- Report: "Kopfdaten Blatt 3" => Summe (€) [Sachkosten, Personalkosten BCB, IT-Aufwände] + Gesamt
+	- Empfehlung Operations etc. in COSTS aufnehmen
+	- Konsolidierung BOOLEAN: wenn alle => ja, ansonsten => nein
+	- Dashboard: nur letzten CR-Status abbilden, keine Doppelnennung eines CR
+	- Bericht: Statusstruktur behalten; Link
+	- P2S1:
+		- Status - Früheste Umsetzung wird von bis zu 4 Teams (alle PPMs) parallel ausgefüllt
+		- Konsolidierte Sicht für parallele Seiten
+		- "Benachr an" nur 1 Team (wie restlichen Seiten)
+
+
+~3650€
+~100€/Monat Versicherung + Steuern
+~50€ /Monat Reperaturen
+
+13.000km = 650l/Jahr
+~70€ /Monat Sprit
+
+=> 220€ * 24 + 3650 = 372€ / Monat
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 Offene Fragen:
 	- Wer füllt die Aufwandstabelle aus? Jedes Department, immer die gleichen, auswählbare... ? => Aufwandstabelle wird Departments, die es bearbeiten, zugewiesen
 	- Sind Seiten nach dem "abschließen" noch bearbeitbar?
